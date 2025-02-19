@@ -1,0 +1,131 @@
+spring: 
+  application:
+    name: chatapp
+  datasource:
+    url: ${POSTGREDB_URL:jdbc:postgresql://localhost:5432}/${POSTGREDB_NAME:chatting}
+    driverClassName: ${POSTGREDB_DRIVER_CLASS_NAME:org.postgresql.Driver}
+    username: ${POSTGREDB_USER:postgres}
+    password: ${POSTGREDB_PASSWORD:postgres}
+  jpa:
+    # show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+    properties: 
+      format-sql: true
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  kafka:
+    bootstrap-servers: localhost:29092
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6380}
+  cache:
+    cache-names:
+    - notifications
+    redis:
+      time-to-live: 30m
+      cache-null-values: false
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+        
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    from: ${MAIL_FROM:laptrinhgalam123@gmail.com}
+    username: ${MAIL_USERNAME:laptrinhgalam123@gmail.com}
+    password: ${MAIL_PASSWORD:cyub suuq wlbr gbtr}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  security:
+    oauth2:
+      client:
+        registration:
+          # Custom OAuth2 client registration
+          # oauth2-client:
+          #   client-id: oauth2-spring-security-client
+          #   client-secret: S9Qi5xNbOND24YNBb8rZ24QdsfU6Ca83
+          #   scope: openid, profile, roles
+          #   authorization-grant-type: authorization_code
+          #   redirect-uri: http://localhost:8080/login/oauth2/code/oauth2-spring-security-client
+          # OAuth2 providers 
+          github:
+            client-id: Ov23li71Qu4tYlxkGG4U
+            client-secret: 8ab1e59793e300fda3a08147b3c2b1087a7c2baa
+            scope:
+              # See https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
+              - user:email
+              - read:user
+          google:
+            client-id: 1002636870506-vr4qnv9ppqa38la9kbpoerk4p7antjmc.apps.googleusercontent.com
+            client-secret: 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
+            scope: 
+              # See https://developers.google.com/identity/protocols/oauth2/scopes
+              - email
+              - profile
+          facebook:
+            client-id: 418758034270800
+            client-secret: 5d8803f8147101809bfac2f009ccfb11
+            scope:
+              # See https://developers.facebook.com/docs/permissions/
+              - email
+              - public_profile
+        # provider:
+        #   oauth2-client:
+        #     issuer-uri: http://localhost:8180/realms/oauth2-demo-realm
+  profile:
+    active: default
+
+app.properties:
+  cors:
+    pathPattern: /**
+    allowedOrigins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000, http://localhost:3001, http://localhost:8080}
+    allowCredentials: true
+    allowedMethods: GET, POST, PUT, PATCH, DELETE, OPTIONS
+    allowedHeaders: Authorization, Origin, Content-Type, Accept, Accept-Encoding, Accept-Language, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Access-Control-Request-Method, X-Requested-With, X-Auth-Token, X-Xsrf-Token, Cache-Control, Id-Token
+    allowedPublicApis: /favicon.ico, /session/login, /public/**
+    exposedHeaders: X-Xsrf-Token
+    maxAge: 1800
+    frontendUrl: ${FRONTEND_URL:http://localhost:3000}
+    frontendActivateUrl: ${FRONTEND_ACTIVATE_URL:http://localhost:3000/activate}
+    backendUrl: ${BACKEND_URL:http://localhost:8080}
+  swagger:
+    document:
+      title: Realtime Chat app API
+      version: 1.0.2
+      description: A documentation about the Realtime Chat app project 
+    servers:
+      - url: ${SWAGGER_SERVER:http://localhost:8080}
+        description: swagger ui server
+    license:
+      name: Your license
+      url: "http://springdoc.org"
+  jwt:
+    secret: ${JWT_SECRET:04ca023b39512e46d0c2cf4b48d5aac61d34302994c87ed4eff225dcf3b0a218739f3897051a057f9b846a69ea2927a587044164b7bae5e1306219d50b588cb1}
+    expiration: 86400
+    tokenPrefix: Bearer
+    tokenType: JWT
+    accessTokenExpiration: 2
+    refreshTokenExpiration: 14
+    macAlgorithm: HS256
+  rabbitmq:
+    topicExchangeName: chatapp_topic_exchange
+    queueName: chatapp_queue
+    routingKey: chatapp_routing_key
+
+cloudinary:
+  apiKey: ${CLOUDINARY_API_KEY:588287885585438}
+  cloudinaryUrl: ${CLOUDINARY_URL:cloudinary://588287885585438:mDptW_PgH6W-ZOfx7Exr13DsqWk@duii6cx3i}
