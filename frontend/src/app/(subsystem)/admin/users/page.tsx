@@ -32,10 +32,10 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import ViewUser from "@/app/(subsystem)/admin/users/view-user";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCachedUserList } from "@/lib/react-query/userCache";
+// import { useCachedUserList } from "@/lib/react-query/userCache";
 import Loading from "@/app/loading";
 import { AnimationButton } from "@/components/shared/custom-button";
-import { toggleBlockUser } from "@/apis/user-api";
+// import { toggleBlockUser } from "@/apis/user-api";
 import { getUserStatusBadge, resolveRoleBadge } from "@/app/(subsystem)/admin/users/user-status-badge";
 
 const userRoleList = ["Admin", "Brand", "Player"];
@@ -50,20 +50,20 @@ export default function UserManagement() {
     const keyword = searchParams.get("keyword") || "";
     const currentPage = currentPageNullable ? parseInt(currentPageNullable) : 1;
     const { toast } = useToast();
-    const {
-        data: currentUsers,
-        isLoading,
-        isError,
-        isFetched,
-        isPaused,
-        refetch,
-    } = useCachedUserList(currentPage, 5, keyword, role);
-    if (isError) return <p>Something went wrong</p>;
-    if (isLoading || isPaused || !currentUsers) return <Loading />; // Isloading is true when api in queryFn was calling and data doesn't exist in cache
-    if (isFetched) {
-        if (currentUsers == null) return <div>Error to display movie info</div>;
-    }
-    if (currentUsers == null) return <div>There is an error to display movie</div>;
+    // const {
+    //     data: currentUsers,
+    //     isLoading,
+    //     isError,
+    //     isFetched,
+    //     isPaused,
+    //     refetch,
+    // } = useCachedUserList(currentPage, 5, keyword, role);
+    // if (isError) return <p>Something went wrong</p>;
+    // if (isLoading || isPaused || !currentUsers) return <Loading />; // Isloading is true when api in queryFn was calling and data doesn't exist in cache
+    // if (isFetched) {
+    //     if (currentUsers == null) return <div>Error to display movie info</div>;
+    // }
+    // if (currentUsers == null) return <div>There is an error to display movie</div>;
     const handlePageChange = (pageNumber: number) => {
         const params = new URLSearchParams(searchParams);
         params.set("page", pageNumber.toString());
@@ -87,21 +87,20 @@ export default function UserManagement() {
 
     async function handleStatusChange(id: string, status: boolean) {
         setLoading(true);
-        const result = await toggleBlockUser(id);
-        if (result?.statusCode !== 200) {
-            toast({
-                title: "Error",
-                description: result?.message,
-                className: "bg-red-500 text-white",
-            });
-        } else {
-            refetch();
-            toast({
-                title: "Success",
-                description: "User status updated successfully",
-                className: "bg-lime-500 text-white",
-            });
-        }
+        // const result = await toggleBlockUser(id);
+        // if (result?.statusCode !== 200) {
+        //     toast({
+        //         title: "Error",
+        //         description: result?.message,
+        //         className: "bg-red-500 text-white",
+        //     });
+        // } else {
+        //     toast({
+        //         title: "Success",
+        //         description: "User status updated successfully",
+        //         className: "bg-lime-500 text-white",
+        //     });
+        // }
         setLoading(false);
     }
     if (loading) {
@@ -189,8 +188,8 @@ export default function UserManagement() {
                             <TableHead> Actions </TableHead>
                         </TableRow>
                     </TableHeader>
-                    <TableBody>
-                        {currentUsers.data.length === 0 && (
+                    {/* <TableBody> */}
+                    {/* {currentUsers.data.length === 0 && (
                             <TableRow>
                                 <TableCell colSpan={6} className="text-center">
                                     No user found
@@ -246,18 +245,18 @@ export default function UserManagement() {
                                 </TableCell>
                             </TableRow>
                         ))}
-                    </TableBody>
+                    </TableBody> */}
                 </Table>
             </div>
             <div className="text-xs text-muted-foreground mt-1">
                 Showing {1} to {5} users
             </div>
             <div className="flex items-center justify-center mt-3">
-                <CustomShadcnPagination
+                {/* <CustomShadcnPagination
                     currentPage={currentUsers.page}
                     totalPages={currentUsers.totalPage}
                     onPageChange={handlePageChange}
-                />
+                /> */}
             </div>
         </div>
     );

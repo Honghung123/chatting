@@ -7,7 +7,7 @@ import { AnimationButton } from "@/components/shared/custom-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-import { useCachedUserQuery } from "@/lib/react-query/userCache";
+// import { useCachedUserQuery } from "@/lib/react-query/userCache";
 import { getQueryParams } from "@/lib/utils";
 import { UserType } from "@/schema/auth.schema";
 import { ErrorResponse } from "@/schema/http.schema";
@@ -18,18 +18,18 @@ import { useState } from "react";
 export default function UserDetails() {
     const [update, setUpdate] = useState<boolean>(false);
     const userId = getQueryParams<string>(useParams(), "id");
-    const { data: user, isLoading, isError, isPaused } = useCachedUserQuery(userId); // Get query status
-    if (isError || user === null) return <ErrorPage />;
-    if (isLoading || isPaused || !user) return <CardSkeleton />; // isLoading is true when api in queryFn was calling and data doesn't exist in cache
-    if (!isLoading && !user) {
-        const error = user as ErrorResponse;
-        toast({
-            title: "User not found",
-            description: error?.message,
-            variant: "destructive",
-        });
-        return <ErrorPage />;
-    }
+    // const { data: user, isLoading, isError, isPaused } = useCachedUserQuery(userId); // Get query status
+    // if (isError || user === null) return <ErrorPage />;
+    // if (isLoading || isPaused || !user) return <CardSkeleton />; // isLoading is true when api in queryFn was calling and data doesn't exist in cache
+    // if (!isLoading && !user) {
+    //     const error = user as ErrorResponse;
+    //     toast({
+    //         title: "User not found",
+    //         description: error?.message,
+    //         variant: "destructive",
+    //     });
+    //     return <ErrorPage />;
+    // }
     // console.log(user);
     return (
         <>
@@ -39,7 +39,7 @@ export default function UserDetails() {
                         <h1 className="text-2xl md:text-4xl font-bold">Update info</h1>
                     </div>
                     <div className="w-[70vw] mx-4 sm:w-sm md:w-sm lg:w-sm xl:w-sm sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto bg-white dark:bg-black shadow-xl rounded-lg ">
-                        <UpdateUserForm user={user} back={() => setUpdate(!update)} />
+                        {/* <UpdateUserForm user={user} back={() => setUpdate(!update)} /> */}
                     </div>
                 </>
             ) : (
@@ -47,7 +47,7 @@ export default function UserDetails() {
                     <div className="flex items-center justify-between mb-6">
                         <h1 className="text-2xl md:text-4xl font-bold">User information</h1>
                     </div>
-                    <div className="w-[70vw] mx-4 sm:w-sm md:w-sm lg:w-sm xl:w-sm sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto bg-white dark:bg-black shadow-xl rounded-lg">
+                    {/* <div className="w-[70vw] mx-4 sm:w-sm md:w-sm lg:w-sm xl:w-sm sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto bg-white dark:bg-black shadow-xl rounded-lg">
                         <div className="rounded-t-lg h-48 overflow-hidden">
                             <img
                                 className="object-cover object-top w-full"
@@ -110,7 +110,7 @@ export default function UserDetails() {
                                 Update info
                             </AnimationButton>
                         </div>
-                    </div>
+                    </div> */}
                 </>
             )}
         </>

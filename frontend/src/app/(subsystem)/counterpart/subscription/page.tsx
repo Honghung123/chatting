@@ -21,26 +21,26 @@ export default function MySubscription() {
         }
     }, []);
     if (isLoading || isFetching) return <MySubscriptionSkeleton />;
-    if (!userAuth?.brand || userAuth!.brand.address == "" || userAuth!.brand.domain == "")
-        return (
-            <>
-                <div className="flex items-center justify-between mb-6">
-                    <h1 className="text-4xl font-bold text-gradient">My subscription</h1>
-                </div>
-                <div className="p-3 shadow-md border border-gray-100 rounded-md dark:bg-slate-800 bg-white">
-                    <div className="flex items-center justify-center gap-3 min-h-[20rem] flex-col">
-                        <p className="text-center px-6">
-                            You don&apos;t have any subscription yet. Click the button below to create a new one!
-                        </p>
-                        <AnimationButton className="py-[.37rem] px-3">
-                            <Link href="/counterpart/subscription/subscribe" className="text-white">
-                                Create new subscription
-                            </Link>
-                        </AnimationButton>
-                    </div>
-                </div>
-            </>
-        );
+    // if (!userAuth?.brand || userAuth!.brand.address == "" || userAuth!.brand.domain == "")
+    //     return (
+    //         <>
+    //             <div className="flex items-center justify-between mb-6">
+    //                 <h1 className="text-4xl font-bold text-gradient">My subscription</h1>
+    //             </div>
+    //             <div className="p-3 shadow-md border border-gray-100 rounded-md dark:bg-slate-800 bg-white">
+    //                 <div className="flex items-center justify-center gap-3 min-h-[20rem] flex-col">
+    //                     <p className="text-center px-6">
+    //                         You don&apos;t have any subscription yet. Click the button below to create a new one!
+    //                     </p>
+    //                     <AnimationButton className="py-[.37rem] px-3">
+    //                         <Link href="/counterpart/subscription/subscribe" className="text-white">
+    //                             Create new subscription
+    //                         </Link>
+    //                     </AnimationButton>
+    //                 </div>
+    //             </div>
+    //         </>
+    //     );
     return (
         <>
             <div className="flex items-center justify-between mb-6">
@@ -50,8 +50,8 @@ export default function MySubscription() {
                 <>
                     <div className="p-3 shadow-md border border-gray-100 rounded-md dark:bg-slate-800 bg-white">
                         <div className="flex flex-wrap justify-between gap-3 min-h-[20rem]">
-                            <div className="info xl:max-w-[23rem]">
-                                <p className="py-1">
+                            {/* <div className="info xl:max-w-[23rem]"> */}
+                            {/* <p className="py-1">
                                     <b className="font-semibold">Name: </b>
                                     <span>{userAuth!.name}</span>
                                 </p>
@@ -75,7 +75,7 @@ export default function MySubscription() {
                                         lng: userAuth!.brand!.longitude,
                                     }}
                                 />
-                            </div>
+                            </div> */}
                         </div>
                         <div className="flex justify-between items-center w-full mt-5 lg:mt-6">
                             <AnimationButton
@@ -88,13 +88,14 @@ export default function MySubscription() {
                             </AnimationButton>
                         </div>
                     </div>
+                    {/* <UpdateSubscriptionForm
+                        subscription={userAuth!}
+                        back={() => setUpdate(!update)}
+                        refetchData={refetch}
+                    /> */}
                 </>
             ) : (
-                <UpdateSubscriptionForm
-                    subscription={userAuth!}
-                    back={() => setUpdate(!update)}
-                    refetchData={refetch}
-                />
+                <p>Update subscription</p>
             )}
         </>
     );

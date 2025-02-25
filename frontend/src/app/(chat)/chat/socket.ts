@@ -1,4 +1,5 @@
 import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 const stompClientUrl = process.env.NEXT_PUBLIC_URL_STOMP_CLIENT;
 
 // Socket client

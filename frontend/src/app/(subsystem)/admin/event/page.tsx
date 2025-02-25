@@ -32,7 +32,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Loading from "@/app/loading";
-import { toggleBlockUser } from "@/apis/user-api";
+// import { toggleBlockUser } from "@/apis/user-api";
 import { useCachedEventListQuery } from "@/lib/react-query/eventCache";
 import { ROLE_ADMIN } from "@/components/shared/authenticatedRoutes";
 import { defaultGameImage, printDateTime } from "@/lib/utils";

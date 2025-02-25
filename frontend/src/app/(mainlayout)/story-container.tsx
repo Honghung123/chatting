@@ -2,7 +2,7 @@
 
 import CreateStoryModal from "@/app/(mainlayout)/create-story-modal";
 import Story from "@/app/(mainlayout)/story";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext } from "@/components/ui/carousel";
 import { useCachedGetAllStory } from "@/lib/react-query/homePageCache";
 import { StoryType } from "@/schema/story.schema";
 import { PaginationV2Type } from "@/schema/types/common";
@@ -11,14 +11,14 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 
 export default function StoryContainer({ user }: { user: UserType | null }) {
-    if (!user) return <></>;
     const { data: storiesData, isLoading, isFetching, refetch } = useCachedGetAllStory(1, 10);
     if (isLoading || isFetching) return <p className="py-4 px-2">Loading. . .</p>;
     if (!isLoading && !isFetching && !storiesData)
         return <p className="py-4 px-2">There is an error to display stories</p>;
     const stories = storiesData! as PaginationV2Type<StoryType>;
+    if (!user) return <></>;
     return (
-        <div className="h-50 my-6 flex w-full cursor-pointer items-center justify-center space-x-2 overflow-hidden">
+        <div className="h-50 my-6 flex w-full cursor-pointer items-center justify-center space-x-2">
             <CreateStoryModal refetchData={refetch}>
                 <div
                     className="relative h-48 w-40 rounded-xl shadow"
@@ -52,6 +52,7 @@ export default function StoryContainer({ user }: { user: UserType | null }) {
                         </CarouselItem>
                     ))}
                 </CarouselContent>
+                <CarouselNext className="-right-4 z-[99999]" />
             </Carousel>
         </div>
     );

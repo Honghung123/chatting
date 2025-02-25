@@ -1,3 +1,5 @@
+import { UserQuickInfoType } from "@/schema/user.schema";
+
 /* Khiem workspace - Define notification types */
 export type NotificationListType = {
     data: Notification[];
@@ -6,15 +8,15 @@ export type NotificationListType = {
     page: number;
     perPage: number;
 };
-export type Notification = {
+export type NotificationType = {
     id: string;
-    userId: string;
-    notificationType: string;
+    user: UserQuickInfoType;
+    type: string;
     title: string;
-    message: string;
-    data: any;
+    content: string;
     createdAt: string;
-    isSeen: boolean;
+    isRead: boolean;
+    targetId: string;
 };
 export type BranchRegisteredData = {
     brandId: string;

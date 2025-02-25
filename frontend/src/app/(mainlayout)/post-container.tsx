@@ -1,13 +1,15 @@
 "use client";
 import { callGetAllPostRequest } from "@/apis/post-api";
 import CreatePostModal from "@/app/(mainlayout)/create-post-modal";
+import PostDropdown from "@/app/(mainlayout)/post-dropdown";
 import { printDateTime } from "@/lib/utils";
 import { PostType } from "@/schema/post.schema";
 import { PaginationV2Type } from "@/schema/types/common";
 import { UserType } from "@/schema/user.schema";
-import { Heart, MessageSquareText, Share, Share2, ThumbsUp } from "lucide-react";
+import { EllipsisVertical, Heart, MessageSquareText, Share, Share2, ThumbsUp } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-const Post: React.FC<{ user: UserType | null }> = ({ user }) => {
+const Post: React.FC<{ user: UserType | null; isUser?: boolean }> = ({ user, isUser }) => {
     const [postList, setPostList] = useState<PaginationV2Type<PostType>>({
         page: 0,
         pageSize: 0,
@@ -24,35 +26,50 @@ const Post: React.FC<{ user: UserType | null }> = ({ user }) => {
     useEffect(() => {
         fetchPosts();
     }, []);
+    const updateAfterRemovingPost = (postId: string) => {
+        const postIdx = postList.data.findIndex((post) => post.id === postId);
+        postList.data.splice(postIdx, 1);
+        setPostList({ ...postList });
+    };
     return (
         <>
-            <CreatePostModal user={user} refetchData={fetchPosts} />
+            {isUser && <CreatePostModal user={user} refetchData={fetchPosts} />}
             {postList.data.map((post, index) => {
                 return (
-                    <div className="h-auto w-full rounded-md bg-white shadow dark:bg-neutral-800" key={index}>
+                    <div
+                        className="h-auto w-full rounded-md bg-white shadow dark:bg-neutral-800"
+                        key={index}
+                        id={`post-${post.id}`}
+                    >
                         <div className="flex items-center space-x-2 p-2.5 px-4">
-                            <div className="h-10 w-10">
-                                <img
-                                    src={
-                                        post.user.avatarUrl ||
-                                        "https://cdn.imagecomics.com/assets/i/releases/1058882/bug-wars-1-of-6_07d80c1f01.jpg"
-                                    }
-                                    className="h-full w-full rounded-full"
-                                    alt="dp"
-                                />
-                            </div>
+                            <Link href={`/profile/${post.user.id}`}>
+                                <div className="h-10 w-10">
+                                    <img
+                                        src={
+                                            post.user.avatarUrl ||
+                                            "https://cdn.imagecomics.com/assets/i/releases/1058882/bug-wars-1-of-6_07d80c1f01.jpg"
+                                        }
+                                        className="h-full w-full rounded-full"
+                                        alt="dp"
+                                    />
+                                </div>
+                            </Link>
                             <div className="flex flex-grow flex-col">
-                                <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    {post.user.name}
-                                </p>
+                                <Link href={`/profile/${post.user.id}`}>
+                                    <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                                        {post.user.name}
+                                    </p>
+                                </Link>
                                 <span className="text-xs font-thin text-gray-400">
                                     {printDateTime(new Date(post.createdAt))}
                                 </span>
                             </div>
                             <div className="h-8 w-8">
-                                <button className="h-full w-full rounded-full text-gray-400 hover:bg-gray-100 focus:outline-none dark:text-gray-500 dark:hover:bg-neutral-700">
-                                    <i className="fas fa-ellipsis-h"></i>
-                                </button>
+                                <PostDropdown post={post!} updateAfterRemovingPost={updateAfterRemovingPost}>
+                                    <div className="h-full w-full rounded-full hover:bg-gray-100 focus:outline-none dark:text-gray-500 dark:hover:bg-neutral-700 flex justify-center items-center">
+                                        <EllipsisVertical size={18} />
+                                    </div>
+                                </PostDropdown>
                             </div>
                         </div>
                         {post.caption && (

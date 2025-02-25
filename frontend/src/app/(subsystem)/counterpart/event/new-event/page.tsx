@@ -247,56 +247,56 @@ const EventForm = () => {
 
     async function handleUploadFile(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
-        if (file) {
-            const result = await callUploadImage(file);
-            if (result?.isSuccess && result.statusCode == 200) {
-                setImageId(result.data.imageId);
-                setImage(file);
-            } else {
-                toast({
-                    title: "Error",
-                    description: "Failed to upload image. Please try again",
-                    variant: "destructive",
-                    duration: 2000,
-                });
-            }
-        } else {
-            setImage(null);
-            setImageId(null);
-            toast({
-                title: "Error",
-                description: "Upload image from local failed",
-                variant: "destructive",
-                duration: 2000,
-            });
-        }
+        // if (file) {
+        //     const result = await callUploadImage(file);
+        //     if (result?.isSuccess && result.statusCode == 200) {
+        //         setImageId(result.data.imageId);
+        //         setImage(file);
+        //     } else {
+        //         toast({
+        //             title: "Error",
+        //             description: "Failed to upload image. Please try again",
+        //             variant: "destructive",
+        //             duration: 2000,
+        //         });
+        //     }
+        // } else {
+        //     setImage(null);
+        //     setImageId(null);
+        //     toast({
+        //         title: "Error",
+        //         description: "Upload image from local failed",
+        //         variant: "destructive",
+        //         duration: 2000,
+        //     });
+        // }
     }
 
     async function handleUploadFileItem(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
-        if (file) {
-            const result = await callUploadImage(file);
-            if (result?.isSuccess && result.statusCode == 200) {
-                setImageItemId(result.data.imageId);
-                setImageItem(file);
-            } else {
-                toast({
-                    title: "Error",
-                    description: "Failed to upload image. Please try again",
-                    variant: "destructive",
-                    duration: 2000,
-                });
-            }
-        } else {
-            setImageItem(null);
-            setImageItemId(null);
-            toast({
-                title: "Error",
-                description: "Upload image from local failed",
-                variant: "destructive",
-                duration: 2000,
-            });
-        }
+        // if (file) {
+        //     const result = await callUploadImage(file);
+        //     if (result?.isSuccess && result.statusCode == 200) {
+        //         setImageItemId(result.data.imageId);
+        //         setImageItem(file);
+        //     } else {
+        //         toast({
+        //             title: "Error",
+        //             description: "Failed to upload image. Please try again",
+        //             variant: "destructive",
+        //             duration: 2000,
+        //         });
+        //     }
+        // } else {
+        //     setImageItem(null);
+        //     setImageItemId(null);
+        //     toast({
+        //         title: "Error",
+        //         description: "Upload image from local failed",
+        //         variant: "destructive",
+        //         duration: 2000,
+        //     });
+        // }
     }
 
     return (

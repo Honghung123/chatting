@@ -1,6 +1,7 @@
+"use client";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import Link from "next/link";
-import { Notification } from "@/schema/notification.shema";
+// import { Notification } from "@/schema/notification.shema";
 import { useAppSelector } from "@/lib/redux/hooks";
 import { useEffect, useState } from "react";
 import { getNotificationList } from "@/apis/notification-api";
@@ -11,18 +12,18 @@ import { printDateTime } from "@/lib/utils";
 export default function CounterpartNotification({ children }: { children: React.ReactNode }) {
     // Define state, actions here
     const [notifications, setNotifications] = useState<Notification[]>([]);
-    useEffect(() => {
-        const getNotifications = async () => {
-            try {
-                const result = await getNotificationList();
-                setNotifications(result.data);
-            } catch (error) {
-                console.log("");
-            }
-        };
-        // get notifications
-        setInterval(() => getNotifications(), 1000);
-    }, []);
+    // useEffect(() => {
+    //     const getNotifications = async () => {
+    //         try {
+    //             const result = await getNotificationList();
+    //             setNotifications(result.data);
+    //         } catch (error) {
+    //             console.log("");
+    //         }
+    //     };
+    //     // get notifications
+    //     setInterval(() => getNotifications(), 1000);
+    // }, []);
     const first3NewestNotifications: Notification[] = notifications
         ? notifications.length > 3
             ? notifications.slice(0, 3)
@@ -60,11 +61,11 @@ export default function CounterpartNotification({ children }: { children: React.
                                     <div className="content flex-1">
                                         <div className="flex justify-between items-center">
                                             <h1 className="line-clamp-1 text-sm">{notification.title}</h1>
-                                            <span className="text-[.75rem]">
+                                            {/* <span className="text-[.75rem]">
                                                 {printDateTime(new Date(notification.createdAt))}
-                                            </span>
+                                            </span> */}
                                         </div>
-                                        <p className="line-clamp-2 text-xs text-justify">{notification.message}</p>
+                                        {/* <p className="line-clamp-2 text-xs text-justify">{notification.message}</p> */}
                                     </div>
                                 </Link>
                             ))}

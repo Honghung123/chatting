@@ -75,7 +75,7 @@ function ChatWindowPopup({
 
     // Fetch messages and subscribe topic when user open a conversation
     useLayoutEffect(() => {
-        console.log("-----------------> Fetching messages... <-----------------------");
+        // console.log("-----------------> Fetching messages... <-----------------------");
         if (!myConversation.conversationId) return;
         const fetchMessages = async () => {
             const messages = await getChatHistoryList(myConversation.conversationId);
@@ -86,7 +86,7 @@ function ChatWindowPopup({
         const subscribedTopics = handleSubscribeMessage(myConversation.conversationId);
         scrollToBottom();
         return () => {
-            console.log("-----------------> Unsubscribing... <-----------------------");
+            // console.log("-----------------> Unsubscribing... <-----------------------");
             if (!myConversation) return;
             for (const topic of subscribedTopics) {
                 topic.unsubscribe();

@@ -1,18 +1,11 @@
 "use client";
 import ChatWindowPopup from "@/app/(mainlayout)/chat-window";
-import ErrorPage from "@/app/error";
-import { ChatBubble, ChatBubbleAvatar, ChatBubbleMessage } from "@/components/ui/chat/chat-bubble";
-import { ChatMessageList } from "@/components/ui/chat/chat-message-list";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { toast } from "@/hooks/use-toast";
-import { useCachedConversationListQuery } from "@/lib/react-query/userCache";
-import { defaultAvatar } from "@/lib/utils";
-import { ConversationType, MessageChatType } from "@/schema/chat.schema";
-import { AttachmentRequestType, AttachmentType, FileUploadResponseType } from "@/schema/media.schema";
+import ErrorPage from "@/app/error"; 
+import { useCachedConversationListQuery } from "@/lib/react-query/userCache"; 
+import { ConversationType, MessageChatType } from "@/schema/chat.schema"; 
 import { UserType } from "@/schema/user.schema";
-import { Client } from "@stomp/stompjs";
-import { Link } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Client } from "@stomp/stompjs"; 
+import { useState } from "react";
 export default function UserContacts({ currentUser, stompClient }: { currentUser: UserType; stompClient: Client }) {
     const [myConversations, setMyConversations] = useState<ConversationType[]>([]);
     const { data: friends, isLoading, isFetching, isError } = useCachedConversationListQuery(); // Get query status

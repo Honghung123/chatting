@@ -83,11 +83,11 @@ export default function QuizQuestionsEventPage() {
                 ))}
             </div>
             <div className="flex items-center justify-center pt-6 pb-10">
-                <CustomShadcnPagination
+                {/* <CustomShadcnPagination
                     currentPage={currentPage}
                     totalPages={quizAndQuestionList!.totalPage}
                     onPageChange={handlePageChange}
-                />
+                /> */}
             </div>{" "}
         </>
     );

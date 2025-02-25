@@ -12,10 +12,13 @@ import { SendOTPRequestDTO, OTPSchema, SentOTPResponseDTO } from "@/schema/auth.
 import { callReSendOTPRequest, callSendOTPRequest } from "@/apis/user-api";
 import { handleErrorApi } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { SuccessResponseType } from "@/schema/types/common";
+import ErrorPage from "@/app/error";
 
-export default function InputOTPForm({ email }: { email: string }) {
+export default function InputOTPForm() {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const email: string = sessionStorage.getItem("emailRegistered") as string;
     const optForm = useForm<SendOTPRequestDTO>({
         resolver: zodResolver(OTPSchema),
         defaultValues: {
@@ -29,21 +32,16 @@ export default function InputOTPForm({ email }: { email: string }) {
         setLoading(true);
         try {
             const result = await callSendOTPRequest(values);
-            if (result.statusCode == 200 && result.isSuccess) {
+            if (result && !result.hasOwnProperty("errorCode")) {
+                const response = result as SuccessResponseType<SentOTPResponseDTO, null>;
                 // console.log(result);
                 localStorage.removeItem("emailRegistered");
                 toast({
-                    description: result.message,
+                    description: response.message,
                     duration: 2000,
                     className: "bg-lime-500 text-white",
                 });
-                localStorage.setItem("accessToken", result.data.accessToken);
-                // console.log(result.data);
-                if (result.data.role.toLowerCase() == "admin") {
-                    router.push("/admin");
-                } else if (result.data.role.toLowerCase() == "brand") {
-                    router.push("/counterpart");
-                }
+                router.push("/");
             } else {
                 toast({
                     description: result.message,
@@ -67,12 +65,19 @@ export default function InputOTPForm({ email }: { email: string }) {
         setLoading(true);
         try {
             const result = await callReSendOTPRequest({ email: emailResend });
-            console.log(result);
-            toast({
-                title: "Success",
-                description: "Resend OTP successfully. Please check your email!",
-                className: "bg-lime-500 text-white",
-            });
+            if (result && !result.hasOwnProperty("errorCode")) {
+                toast({
+                    title: "Success",
+                    description: "Resend OTP successfully. Please check your email!",
+                    className: "bg-lime-500 text-white",
+                });
+            } else {
+                toast({
+                    title: "Error",
+                    description: "Resend OTP successfully. Please check your email!",
+                    className: "bg-lime-500 text-white",
+                });
+            }
         } catch (error: any) {
             handleErrorApi({
                 error,
@@ -82,7 +87,7 @@ export default function InputOTPForm({ email }: { email: string }) {
             setLoading(false);
         }
     }
-
+    if (!email) return <ErrorPage statusCode={404} message="Page not found" />;
     return (
         <Form {...optForm}>
             <form onSubmit={optForm.handleSubmit(onSubmit)}>

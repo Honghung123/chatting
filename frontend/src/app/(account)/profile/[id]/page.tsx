@@ -1,10 +1,56 @@
 "use client";
-import CreatePostBox from "@/app/(mainlayout)/create-post-box";
+import { callGettingUserInfoRequest, callGettingUserProfileRequest } from "@/apis/user-api";
 import PostContainer from "@/app/(mainlayout)/post-container";
-import React, { useState } from "react";
+import UnauthenticatedPage from "@/app/unauthenticated";
+import { defaultAvatar, getQueryParams } from "@/lib/utils";
+import { ErrorResponseType } from "@/schema/types/common";
+import { UserType } from "@/schema/user.schema";
+import { EllipsisVertical } from "lucide-react";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 const ProfilePage: React.FC = () => {
-    // const [postsView, setPostsView] = useState<>("listView");
+    // const { data: user, isLoading, isFetching } = useCachedUserInfo();
+    // if (isLoading || isFetching) return <div>Loading...</div>;
+    // if (!isLoading && !isFetching && (!user || Object.keys(user!).includes("errorCode"))) {
+    //     const error = user as ErrorResponseType;
+    //     if (error.statusCode === 401)
+    //         return <UnauthenticatedPage statusCode={error.statusCode} message={error.message} />;
+    //     return <UnauthenticatedPage />;
+    // }
+    const [isLoading, setIsLoading] = useState(true);
+    const [user, setUser] = useState<UserType | null>(null);
+    const [targetUser, setTargetUser] = useState<UserType | null>(null);
+    const userId = getQueryParams<string>(useParams(), "id");
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const [currentUser, targetedUser] = await Promise.all([
+                callGettingUserInfoRequest(),
+                callGettingUserProfileRequest(userId),
+            ]);
+            if (
+                !currentUser ||
+                !targetedUser ||
+                currentUser.hasOwnProperty("errorCode") ||
+                targetedUser.hasOwnProperty("errorCode")
+            ) {
+                return;
+            }
+            setUser(currentUser as UserType);
+            setTargetUser(targetedUser as UserType);
+            setIsLoading(false);
+        };
+        if (userId) {
+            fetchUsers();
+        } else {
+            setIsLoading(false);
+        }
+    }, []);
+    if (isLoading) return <div>Loading...</div>;
+    if (!user || !targetUser) {
+        return <UnauthenticatedPage statusCode={401} message="You need to be logged in to view this page." />;
+    }
+    const isUser = user!.id === targetUser!.id;
     return (
         <div className="h-full w-full">
             <div className="h-auto w-full bg-white shadow dark:bg-neutral-800">
@@ -19,28 +65,28 @@ const ProfilePage: React.FC = () => {
                         }}
                     >
                         <div className="absolute flex w-full items-center justify-center" style={{ bottom: "-15px" }}>
-                            <div className="absolute bottom-[30px] right-[30px]">
-                                <button className="rounded-md bg-white px-3 py-2 text-sm font-semibold hover:bg-gray-50 focus:outline-none">
-                                    <i className="fas fa-camera mr-2"></i>Edit Cover Photo
-                                </button>
-                            </div>
+                            {isUser && (
+                                <div className="absolute bottom-[30px] right-[30px]">
+                                    <button className="rounded-md bg-white px-3 py-2 text-sm font-semibold hover:bg-gray-50 focus:outline-none">
+                                        <i className="fas fa-camera mr-2"></i>Edit Cover Photo
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                     <div className="mx-auto h-full px-10">
                         <div className="flex items-end gap-5 border-b pb-5 dark:border-stone-700">
                             <div className="z-10 -mt-8 h-[10.25rem] w-[10.25rem]">
                                 <img
-                                    className="h-full w-full rounded-full border-4 border-primary"
-                                    src="https://random.imagecdn.app/250/250"
+                                    className="h-full w-full rounded-full border-4 border-primary bg-white"
+                                    src={targetUser.avatarUrl || defaultAvatar}
                                     alt="dp"
                                 />
                             </div>
                             <div className="flex-1 flex-col pb-2">
-                                <p className="text-[2rem] font-bold text-black dark:text-gray-200">
-                                    Saiful Islam Shihab
-                                </p>
+                                <p className="text-[2rem] font-bold text-black dark:text-gray-200">{targetUser.name}</p>
                                 <a className="cursor-pointer text-sm font-semibold text-gray-600 hover:underline dark:text-gray-300">
-                                    528 friends
+                                    3 friends
                                 </a>
                                 <div className="flex w-full items-center justify-between">
                                     <div className="mt-2 flex items-center">
@@ -86,14 +132,18 @@ const ProfilePage: React.FC = () => {
                                         />
                                     </div>
                                     <div className="flex items-center space-x-2">
-                                        <button className="rounded-md bg-primary px-3 py-1.5 text-sm font-semibold text-white hover:bg-blue-600 focus:outline-none">
-                                            <i className="fas fa-plus-circle mr-2"></i>Add to Story
-                                        </button>
-                                        <button className="rounded-md bg-gray-200 px-3 py-1.5 text-sm font-semibold text-black hover:bg-gray-200 focus:outline-none dark:bg-neutral-700 dark:text-gray-200 dark:hover:bg-neutral-600">
-                                            <i className="fas fa-pen mr-2"></i>Edit Profile
-                                        </button>
+                                        {isUser && (
+                                            <>
+                                                <button className="rounded-md bg-primary px-3 py-1.5 text-sm font-semibold text-white hover:bg-blue-600 focus:outline-none">
+                                                    <i className="fas fa-plus-circle mr-2"></i>Add to Story
+                                                </button>
+                                                <button className="rounded-md bg-gray-200 px-3 py-1.5 text-sm font-semibold text-black hover:bg-gray-200 focus:outline-none dark:bg-neutral-700 dark:text-gray-200 dark:hover:bg-neutral-600">
+                                                    <i className="fas fa-pen mr-2"></i>Edit Profile
+                                                </button>
+                                            </>
+                                        )}
                                         <button className="rounded-md bg-gray-100 px-3 py-1.5 text-sm font-semibold text-black hover:bg-gray-200 focus:outline-none dark:bg-neutral-700 dark:text-gray-200 dark:hover:bg-neutral-600">
-                                            <i className="fas fa-ellipsis-h"></i>
+                                            <EllipsisVertical size={18} />
                                         </button>
                                     </div>
                                 </div>
@@ -136,14 +186,6 @@ const ProfilePage: React.FC = () => {
                             <div className="flex flex-col items-center gap-2">
                                 <div className="flex flex-col items-center">
                                     <p className="text-sm">Silence among noise</p>
-                                    <a
-                                        href="https://saiful-islam.vercel.app"
-                                        target="__blank"
-                                        rel="noreferrer"
-                                        className="text-sm text-primary hover:underline"
-                                    >
-                                        https://saiful-islam.vercel.app
-                                    </a>
                                 </div>
                                 <button className="w-full rounded-md bg-gray-100 px-3 py-1.5 text-sm font-semibold hover:bg-gray-200 focus:outline-none dark:bg-neutral-700 dark:hover:bg-neutral-600">
                                     Edit bio
@@ -161,8 +203,7 @@ const ProfilePage: React.FC = () => {
                                         <i className="fas fa-graduation-cap text-[1.25rem] text-gray-400"></i>
                                     </span>
                                     <p>
-                                        Studied B.Sc in SWE at{" "}
-                                        <span className="font-semibold">Daffodil International University</span>
+                                        Studied in SWE at <span className="font-semibold">University of Science</span>
                                     </p>
                                 </div>
                                 <div className="flex items-center space-x-2">
@@ -170,15 +211,7 @@ const ProfilePage: React.FC = () => {
                                         <i className="fas fa-home text-[1.25rem] text-gray-400"></i>
                                     </span>
                                     <p>
-                                        Lives in <span className="font-semibold">Dhaka</span>
-                                    </p>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <span>
-                                        <i className="fas fa-map-marker-alt text-[1.25rem] text-gray-400"></i>
-                                    </span>
-                                    <p>
-                                        From <span className="font-semibold">Chandpur, Chittagong, Bangladesh</span>
+                                        Lives in <span className="font-semibold">HCM</span>
                                     </p>
                                 </div>
                                 <div className="flex items-center space-x-2">
@@ -188,71 +221,6 @@ const ProfilePage: React.FC = () => {
                                     <p>
                                         <span className="font-semibold">Single</span>
                                     </p>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <span>
-                                        <i className="fab fa-facebook text-[1.25rem] text-gray-400"></i>
-                                    </span>
-                                    <a
-                                        className="cursor-pointer hover:underline"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        href={"https://facebook.com/saifulshihab"}
-                                    >
-                                        <p>saifulshihab</p>
-                                    </a>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <span>
-                                        <i className="fab fa-instagram text-[1.25rem] text-gray-400"></i>
-                                    </span>
-                                    <a
-                                        className="cursor-pointer hover:underline"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        href={"https://instagram.com/_shiha6"}
-                                    >
-                                        <p>_shiha6</p>
-                                    </a>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <span>
-                                        <i className="fab fa-twitter text-[1.25rem] text-gray-400"></i>
-                                    </span>
-                                    <a
-                                        className="cursor-pointer hover:underline"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        href={"https://twitter.com/ShihabSWE"}
-                                    >
-                                        <p>ShihabSWE</p>
-                                    </a>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <span>
-                                        <i className="fab fa-github text-[1.25rem] text-gray-400"></i>
-                                    </span>
-                                    <a
-                                        className="cursor-pointer hover:underline"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        href={"https://github.com/saifulshihab"}
-                                    >
-                                        <p>saifulshihab</p>
-                                    </a>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <span>
-                                        <i className="fab fa-behance text-[1.25rem] text-gray-400"></i>
-                                    </span>
-                                    <a
-                                        className="cursor-pointer hover:underline"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        href={"https://www.behance.net/saifulis1am"}
-                                    >
-                                        <p>saifulis1am</p>
-                                    </a>
                                 </div>
                             </div>
 
@@ -380,24 +348,23 @@ const ProfilePage: React.FC = () => {
                         </div>
                     </div>
                     <div className="col-span-3">
-                        {/* Create post */}
-                        <CreatePostBox />
                         {/* post filter box */}
-                        <div className="mt-4 rounded-md bg-white p-2 px-3 text-sm shadow dark:bg-neutral-800">
-                            <div className="flex items-center justify-between border-b pb-2 dark:border-neutral-700">
-                                <div>
-                                    <p className="text-xl font-bold text-gray-700 dark:text-gray-300">Posts</p>
+                        {isUser && (
+                            <div className="mt-4 rounded-md bg-white p-2 px-3 text-sm shadow dark:bg-neutral-800">
+                                <div className="flex items-center justify-between border-b pb-2 dark:border-neutral-700">
+                                    <div>
+                                        <p className="text-xl font-bold text-gray-700 dark:text-gray-300">Posts</p>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                        <button className="rounded-md bg-gray-200 px-3 py-1.5 text-sm font-semibold text-black hover:bg-gray-200 focus:outline-none dark:bg-neutral-700 dark:text-gray-200 dark:hover:bg-neutral-600">
+                                            <i className="fas fa-sliders-h mr-2"></i>Filters
+                                        </button>
+                                        <button className="rounded-md bg-gray-200 px-3 py-1.5 text-sm font-semibold text-black hover:bg-gray-200 focus:outline-none dark:bg-neutral-700 dark:text-gray-200 dark:hover:bg-neutral-600">
+                                            <i className="fas fa-cog mr-2"></i>Manage Posts
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className="flex items-center space-x-2">
-                                    <button className="rounded-md bg-gray-200 px-3 py-1.5 text-sm font-semibold text-black hover:bg-gray-200 focus:outline-none dark:bg-neutral-700 dark:text-gray-200 dark:hover:bg-neutral-600">
-                                        <i className="fas fa-sliders-h mr-2"></i>Filters
-                                    </button>
-                                    <button className="rounded-md bg-gray-200 px-3 py-1.5 text-sm font-semibold text-black hover:bg-gray-200 focus:outline-none dark:bg-neutral-700 dark:text-gray-200 dark:hover:bg-neutral-600">
-                                        <i className="fas fa-cog mr-2"></i>Manage Posts
-                                    </button>
-                                </div>
-                            </div>
-                            {/* <div className="-mb-1 mt-1 flex space-x-3">
+                                {/* <div className="-mb-1 mt-1 flex space-x-3">
                                 <button
                                     className={`h-8 flex-1 justify-center space-x-2 rounded-md font-semibold text-gray-500 hover:bg-gray-100 focus:outline-none dark:text-gray-300 dark:hover:bg-neutral-700 ${
                                         postsView === "listView" ? "bg-gray-200 dark:bg-neutral-700" : undefined
@@ -415,10 +382,12 @@ const ProfilePage: React.FC = () => {
                                     <i className="fas fa-th-large mr-2"></i>Grid View
                                 </button>
                             </div> */}
-                        </div>
-
+                            </div>
+                        )}
                         {/* user posts */}
-                        <PostContainer />
+                        <div className="space-y-3">
+                            <PostContainer user={targetUser} isUser={isUser} />
+                        </div>
                     </div>
                 </div>
             </div>

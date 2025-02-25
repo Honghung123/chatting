@@ -60,18 +60,18 @@ export default function UpdateGameForm({ game, back }: { game: GameType; back: (
     async function handleUploadFile(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
         if (file) {
-            const result = await callUploadImage(file);
-            if (result?.isSuccess && result.statusCode == 200) {
-                setImageId(result.data.imageId);
-                setImage(file);
-            } else {
-                toast({
-                    title: "Error",
-                    description: "Failed to upload image. Please try again",
-                    variant: "destructive",
-                    duration: 2000,
-                });
-            }
+            // const result = await callUploadImage(file);
+            // if (result?.isSuccess && result.statusCode == 200) {
+            //     setImageId(result.data.imageId);
+            //     setImage(file);
+            // } else {
+            toast({
+                title: "Error",
+                description: "Failed to upload image. Please uncomment this code",
+                variant: "destructive",
+                duration: 2000,
+            });
+            // }
         } else {
             setImage(null);
             setImageId(null);

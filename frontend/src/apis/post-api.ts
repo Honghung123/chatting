@@ -1,7 +1,7 @@
 import { myAxios } from "@/apis/constants";
 import { AttachmentRequestType } from "@/schema/media.schema";
 import { PostType } from "@/schema/post.schema";
-import { PaginationType, PaginationV2Type, SuccessResponseType } from "@/schema/types/common";
+import { ErrorResponseType, PaginationType, PaginationV2Type, SuccessResponseType } from "@/schema/types/common";
 
 export const callGetAllPostRequest = async (page: number, size: number): Promise<PaginationV2Type<PostType>> => {
     try {
@@ -44,5 +44,26 @@ export const callAddANewPostRequest = async (
         return data.data;
     } catch (error: any) {
         return null;
+    }
+};
+
+export const callDeletePostRequest = async (postId: string): Promise<{ deleted: boolean } | ErrorResponseType> => {
+    try {
+        if (!localStorage.getItem("accessToken") || !localStorage.getItem("refreshToken"))
+            return {
+                statusCode: 401,
+                message: "Unauthorized",
+                timestamp: new Date().toISOString(),
+                path: "/",
+                errorCode: "invalid_token",
+            };
+        await myAxios.delete(`/post/${postId}`, {
+            headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+        });
+        return {
+            deleted: true,
+        };
+    } catch (error: any) {
+        return error.response.data as ErrorResponseType;
     }
 };

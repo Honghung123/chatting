@@ -70,6 +70,11 @@ export function printDateTime(date: Date | null | undefined) {
     return date.toLocaleString();
 }
 
+export function printDate(date: Date | null | undefined) {
+    if (!date) return "N/A";
+    return date.toDateString();
+}
+
 export function printTime(date: Date) {
     if (!date) return "";
     const hour = date.getHours();

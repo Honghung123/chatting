@@ -46,16 +46,16 @@ export function RegisterForm() {
         if (loading) return;
         setLoading(true);
         const result = await callRegisterRequest(values);
-        if (result.statusCode == 201) {
+        if (result && !result.hasOwnProperty("errorCode")) {
             const response = result as SuccessResponseType<string, null>;
             toast({
-                description: result.message,
+                description: response.message,
                 duration: 2000,
                 className: "bg-lime-500 text-white",
             });
             setLoading(false);
-            localStorage.setItem("emailRegistered", response.data);
-            // router.push(`/verify-otp`);
+            sessionStorage.setItem("emailRegistered", response.data);
+            router.push(`/check-email`);
         } else {
             const response = result as ErrorResponseType;
             let errorMessage = "An unexpected error has occurred. Please try again later.";

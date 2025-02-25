@@ -33,22 +33,22 @@ export function SubscriptionForm() {
     });
     const { data: userAuth, isLoading, isFetching, refetch } = useCachedUserInfo();
     if (isLoading || isFetching) return <MySubscriptionSkeleton />;
-    if (userAuth?.brand && userAuth!.brand.address != "" && userAuth!.brand.domain != "") {
-        return (
-            <>
-                <div className="p-3 shadow-md border border-gray-100 rounded-md dark:bg-slate-800 bg-white w-full">
-                    <div className="flex items-center justify-center gap-3 min-h-[20rem] flex-col w-full">
-                        <p className="text-center px-6">You already have a subscription!</p>
-                        <AnimationButton className="py-[.37rem] px-3">
-                            <Link href="/counterpart/subscription" className="text-white">
-                                My subscription
-                            </Link>
-                        </AnimationButton>
-                    </div>
-                </div>
-            </>
-        );
-    }
+    // if (userAuth?.brand && userAuth!.brand.address != "" && userAuth!.brand.domain != "") {
+    //     return (
+    //         <>
+    //             <div className="p-3 shadow-md border border-gray-100 rounded-md dark:bg-slate-800 bg-white w-full">
+    //                 <div className="flex items-center justify-center gap-3 min-h-[20rem] flex-col w-full">
+    //                     <p className="text-center px-6">You already have a subscription!</p>
+    //                     <AnimationButton className="py-[.37rem] px-3">
+    //                         <Link href="/counterpart/subscription" className="text-white">
+    //                             My subscription
+    //                         </Link>
+    //                     </AnimationButton>
+    //                 </div>
+    //             </div>
+    //         </>
+    //     );
+    // }
 
     async function onSubmit(values: SubscriptionRequestDTO) {
         if (loading) return;

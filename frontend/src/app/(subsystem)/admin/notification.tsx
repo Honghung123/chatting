@@ -1,8 +1,9 @@
+"use client";
 import { getNotificationList } from "@/apis/notification-api";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useAppSelector } from "@/lib/redux/hooks";
 import { printDateTime } from "@/lib/utils";
-import { Notification } from "@/schema/notification.shema";
+// import { Notification } from "@/schema/notification.shema";
 import { BellRing } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -21,7 +22,7 @@ export default function AdminNotification({ children }: { children: React.ReactN
         const getNotifications = async () => {
             try {
                 const result = await getNotificationList();
-                setNotifications(result.data);
+                // setNotifications(result.data);
             } catch (error) {
                 console.log("");
             }
@@ -48,7 +49,7 @@ export default function AdminNotification({ children }: { children: React.ReactN
                     <p className="text-center font-semibold pt-1 border-b border-b-gray-200">Notification</p>
                     <ul className="py-1 divide-y">
                         {notifications.length == 0 && <p className="text-center">No notification</p>}
-                        {notifications.length > 0 &&
+                        {/* {notifications.length > 0 &&
                             first3NewestNotifications.map((notification, index) => (
                                 <Link
                                     key={index}
@@ -70,7 +71,7 @@ export default function AdminNotification({ children }: { children: React.ReactN
                                         <p className="line-clamp-2 text-xs text-justify">{notification.message}</p>
                                     </div>
                                 </Link>
-                            ))}
+                            ))} */}
                     </ul>
                     <div className="flex justify-center p-1 border-t border-t-gray-200">
                         <Link

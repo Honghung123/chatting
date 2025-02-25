@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { UserType } from "@/schema/user.schema";
-import { BookMarked, Heart, Star, LogOut } from "lucide-react";
+import { BookMarked, Heart, Star, LogOut, Settings } from "lucide-react";
 import Link from "next/link";
 
 export default function UserProfileDropdown({ children, user }: { children: React.ReactNode; user: UserType }) {
@@ -25,7 +25,7 @@ export default function UserProfileDropdown({ children, user }: { children: Reac
             <PopoverTrigger className="flex items-center">{children}</PopoverTrigger>
             <PopoverContent className="min-w-[20rem] border border-gray-200 !p-0">
                 <div className="cursor-pointer hover:bg-slate-200 border-b p-3 pb-2">
-                    <Link href="/profile">
+                    <Link href={`/profile/${user.id}`}>
                         <div className="flex items-center gap-3">
                             <img className="h-8 w-8 rounded-full" src={user?.avatarUrl ?? ""} alt="user image" />
                             <p>{user?.name || "Unknown"}</p>
@@ -36,8 +36,8 @@ export default function UserProfileDropdown({ children, user }: { children: Reac
 
                 <Link href="/watchlist">
                     <div className="cursor-pointer bg-main-hover hover:bg-slate-200  flex gap-3 items-center p-2">
-                        <BookMarked size={20} />
-                        <span className="block w-full h-full">My watchlist</span>
+                        <Settings size={20} />
+                        <span className="block w-full h-full">Setting</span>
                     </div>
                 </Link>
                 <div

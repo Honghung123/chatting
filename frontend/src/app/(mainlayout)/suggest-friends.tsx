@@ -5,11 +5,11 @@ import { defaultAvatar } from "@/lib/utils";
 import { PaginationV2Type } from "@/schema/types/common";
 import { UserType } from "@/schema/user.schema";
 import { UserRoundPlus } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function suggestFriends({ user }: { user: UserType | null }) {
+export default function SuggestFriends({ user }: { user: UserType | null }) {
     const [suggestFriendList, setSuggestFriendList] = useState<UserType[]>([]);
-    if (!user) return <></>;
     useEffect(() => {
         const fetchFriendList = async () => {
             const result = await callSuggestFriendInfoRequest();
@@ -21,14 +21,16 @@ export default function suggestFriends({ user }: { user: UserType | null }) {
             fetchFriendList();
         }
     }, []);
+    if (!user) return <></>;
+
     return (
-        <div>
-            <h1>Other friends you may know:</h1>
+        <div className="select-none">
+            <h1 className="text-lg md:text-2xl font-semibold">Other friends you may know:</h1>
             <Carousel
                 opts={{
                     align: "center",
                 }}
-                className="w-full pl-2"
+                className="w-full"
             >
                 <CarouselContent>
                     {suggestFriendList.map((friend, index) => (
@@ -37,8 +39,8 @@ export default function suggestFriends({ user }: { user: UserType | null }) {
                         </CarouselItem>
                     ))}
                 </CarouselContent>
-                <CarouselPrevious className="-left-3" />
-                <CarouselNext className="-right-3" />
+                <CarouselPrevious className="-left-4" />
+                <CarouselNext className="-right-4" />
             </Carousel>
         </div>
     );
@@ -48,11 +50,13 @@ function FriendCard({ friend }: { friend: UserType }) {
     return (
         <div className="flex flex-col bg-white rounded-md">
             <div className="h-40 rounded-md">
+                <Link href={`/profile/${friend.id}`}>
                 <img
                     src={friend.avatarUrl || defaultAvatar}
                     alt={friend.name}
                     className="w-full h-full object-cover object-center rounded-t-md border-b"
-                />
+                    />
+                </Link>
             </div>
             <div className="px-2 pb-2">
                 <p className="font-semibold line-clamp-1 pb-1">{friend.name}</p>

@@ -103,22 +103,17 @@ export const OTPSchema = z.object({
 
 export type SendOTPRequestDTO = z.infer<typeof OTPSchema>;
 
-export type SentOTPResponseDTO = {
-    isSuccess: boolean;
-    statusCode: number;
-    message: string;
-    data: any;
-    validationErrors: any;
-};
-
 export const ReSendOTPRequestSchema = z.object({
     email: z.string().email(),
 });
 
+export type SentOTPResponseDTO = {
+    data: string;
+};
+
 export type ReSendOTPRequestDTO = z.infer<typeof ReSendOTPRequestSchema>;
 export type ReSentOTPResponseDTO = {
-    statusCode: number;
-    data: any;
+    data: string;
 };
 
 export type RenewTokensType = {

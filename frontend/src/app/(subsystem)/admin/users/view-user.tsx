@@ -39,7 +39,7 @@ export default function ViewUser({ children, user }: { children: React.ReactNode
                                     <div className="font-medium">Email:</div>
                                     <div>{user.email}</div>
                                     <div className="font-medium">Phone:</div>
-                                    <div>{user.phoneNumber || "N/A"}</div>
+                                    {/* <div>{user.phoneNumber || "N/A"}</div> */}
                                     <div className="font-medium">Role:</div>
                                     <div className="flex gap-2 divide-x">{user.role}</div>
                                     <div className="font-medium">Status:</div>

@@ -28,12 +28,13 @@ export const AuthenticatedRoute = (Component: any, role: string) => {
             return <PageNotFound />;
         }
         if (currentUser) {
-            if (hasRole(currentUser.role, role)) {
-                dispatch(updateUser(currentUser));
-                return <Component {...props} />;
-            } else {
-                return <PageNotFound />;
-            }
+            // if (hasRole(currentUser.role, role)) {
+            //     dispatch(updateUser(currentUser));
+            //     return <Component {...props} />;
+            // } else {
+            //     return <PageNotFound />;
+            // }
+            return <p>You has been logged in. This is homepage</p>;
         }
         return <Loading />;
     };
