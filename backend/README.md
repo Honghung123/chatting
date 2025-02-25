@@ -1,1 +1,1 @@
-sdf sdfsdf sdf d Improve security with password hashing and token expiration Optimize authentication performance CAdd Dockerfile and docker-compose for containerizationtabase indexing for faster lookups
+sdf sdfsdf sdf d Improve security with password hashing and token expiration Optimize authentication performance CAdd Dockerfile and docker-compose for containerizationtabase indexing for faster lookupsConfigure multi-stage build for optimized Docker images
