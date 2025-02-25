@@ -1,1 +1,1 @@
-sdf sdfsdf sdf d Improve security with password hashing and token expiration Optimize authentication performance CAdd Dockerfile an Improve UI responsiveness and accessibility Optimize image loading with Next.js optimizatio
+sdf sdfsdf sdf  Fix UI glitches in chat module
