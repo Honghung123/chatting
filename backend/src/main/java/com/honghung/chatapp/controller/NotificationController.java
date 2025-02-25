@@ -5,8 +5,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.honghung.chatapp.component.message.Receiver;
 import com.honghung.chatapp.constant.AppProperties;
+import com.honghung.chatapp.dto.response.PaginationData;
 import com.honghung.chatapp.dto.response.SuccessResponseEntity;
+import com.honghung.chatapp.dto.response.notification.NotificationResponse;
 import com.honghung.chatapp.entity.Notification;
+import com.honghung.chatapp.mapper.NotificationMapper;
+import com.honghung.chatapp.model.UserPrincipal;
 import com.honghung.chatapp.service.notification.NotificationService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,26 +54,31 @@ public class NotificationController {
     
 
     @GetMapping("/all")
-    public SuccessResponseEntity<Page<Notification>> getLatestNotifications(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, @RequestParam UUID userId) {
-        Page<Notification> notifications = notificationService.getLatestNotifications(userId, page, size);
-        return SuccessResponseEntity.from(HttpStatus.OK, "Get notifications successfully", notifications);
+    public SuccessResponseEntity<PaginationData<NotificationResponse>> getLatestNotifications(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size) {
+        UserPrincipal user = (UserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(user == null) return SuccessResponseEntity.from(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        Page<Notification> notifications = notificationService.getNotifications(user.getId(), page - 1, size);
+        PaginationData<NotificationResponse> notificationsResponses = PaginationData.<NotificationResponse>builder()
+                .page(page)
+                .pageSize(size)
+                .totalElements(notifications.getTotalElements())
+                .totalPages(notifications.getTotalPages())
+                .data(notifications.getContent().stream().map(NotificationMapper::convertToNotificationResponse).toList()) 
+                .build();
+        return SuccessResponseEntity.from(HttpStatus.OK, "Get notifications successfully", notificationsResponses);
     }
     
 
     @PutMapping("/mark-as-read/{id}")
-    public SuccessResponseEntity<Void> putMethodName(@PathVariable Long id) {
+    public SuccessResponseEntity<Void> markAsReadNotification(@PathVariable UUID id) {
         notificationService.markAsRead(id);
         return SuccessResponseEntity.from(HttpStatus.OK, "Mark as read successfully");
     }
 
     @DeleteMapping("/{id}")
-    public SuccessResponseEntity<Void> deleteNotification(@PathVariable Long id) {
+    public SuccessResponseEntity<Void> deleteNotification(@PathVariable UUID id) {
         notificationService.deleteNotification(id);
         return SuccessResponseEntity.from(HttpStatus.NO_CONTENT, "Delete notification successfully");
     }
-
-    @GetMapping("/test")
-    public String test() {
-        return "test";
-    }
+ 
 }

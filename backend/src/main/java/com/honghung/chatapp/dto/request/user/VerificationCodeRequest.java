@@ -9,9 +9,9 @@ public record VerificationCodeRequest(
     @Email(message = "Email is not valid")
     String email,
 
-    @NotBlank(message = "Password cannot be blank")
+    @NotBlank(message = "OTP code cannot be blank")
     @Size(min = 6, max = 6, message = "Invalid verification code")
-    String code
+    String otpCode
 ) {
     
 }

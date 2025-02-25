@@ -1,20 +1,20 @@
 -- Insert data
 
 INSERT INTO users (id,avatar_id,avatar_url,cover_id,cover_url,created_at,email,is_activated,name,password,role ,status,username) VALUES
-	 ('79073652-ad60-4b47-8662-f59e13a70633'::uuid,'bpazwyaxc7bwb4xkedqb','http://res.cloudinary.com/duii6cx3i/image/upload/v1739703940/bpazwyaxc7bwb4xkedqb.jpg',NULL,NULL,NULL,'nr7b8gn67@mozmail.com',false,'Nguyen Van A','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'nr7b8gn67'),
-	 ('1a7995bb-461e-492e-b897-7f474bd021c1'::uuid,'damhonghung123','https://lh3.googleusercontent.com/a/ACg8ocJnfQCQINy8K3A_fimVkskHkTwB0uwTT8by8WfLUmPBDyIGCtzq=s96-c',NULL,NULL,NULL,'damhonghung123@gmail.com',true,'Hung Hong','$2a$10$rXsfbnHiP3ii.5dVBooEPO6o8lang3BI8.7BG6BG0WC0CMS4.nNCu','USER',true,'damhonghung123'),
-	 ('2b123456-8c90-4abc-9def-123456789abc'::uuid,NULL,NULL,NULL,NULL,NULL,'user1@gmail.com',true,'Trần Quang Tâm','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'user1'),
-	 ('3c234567-9d01-5bcd-0ef1-23456789abcd'::uuid,NULL,NULL,NULL,NULL,NULL,'user2@gmail.com',true,'Trần Huy','$2a$10$rXsfbnHiP3ii.5dVBooEPO6o8lang3BI8.7BG6BG0WC0CMS4.nNCu','USER',true,'user2'),
-	 ('4d345678-0e12-6cde-1f23-3456789abcde'::uuid,NULL,NULL,NULL,NULL,NULL,'user3@gmail.com',true,'User Three','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'user3'),
-	 ('5e456789-1f23-7def-2345-456789abcdef'::uuid,NULL,NULL,NULL,NULL,NULL,'user4@gmail.com',true,'User Four','$2a$10$rXsfbnHiP3ii.5dVBooEPO6o8lang3BI8.7BG6BG0WC0CMS4.nNCu','USER',true,'user4'),
-	 ('6f56789a-2345-8ef0-3456-56789abcdef0'::uuid,NULL,NULL,NULL,NULL,NULL,'user5@gmail.com',true,'User Five','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'user5'),
-	 ('6f56789a-2345-8ef0-3456-56789abcdef1'::uuid,NULL,NULL,NULL,NULL,NULL,'user6@gmail.com',true,'User Six','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'user6'),
-	 ('2b123456-8c90-4abc-9def-123456789ade'::uuid,NULL,NULL,NULL,NULL,NULL,'user11@gmail.com',true,'Nguyen Van Tuyen','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'vanan'),
-	 ('6f56789a-2345-8ef0-3456-56789abcdef5'::uuid,NULL,NULL,NULL,NULL,NULL,'user22@gmail.com',false,'John Smith','$2a$10$rXsfbnHiP3ii.5dVBooEPO6o8lang3BI8.7BG6BG0WC0CMS4.nNCu','USER',true,'johnsmith');
+	 ('79073652-ad60-4b47-8662-f59e13a70633'::uuid,'bpazwyaxc7bwb4xkedqb','http://res.cloudinary.com/duii6cx3i/image/upload/v1739703940/bpazwyaxc7bwb4xkedqb.jpg',NULL,NULL,'2025-02-13 21:10:00.131193','nr7b8gn67@mozmail.com',false,'Nguyen Van A','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'nr7b8gn67'),
+	 ('1a7995bb-461e-492e-b897-7f474bd021c1'::uuid,'damhonghung123','https://lh3.googleusercontent.com/a/ACg8ocJnfQCQINy8K3A_fimVkskHkTwB0uwTT8by8WfLUmPBDyIGCtzq=s96-c',NULL,NULL,'2025-02-12 21:10:00.131193','damhonghung123@gmail.com',true,'Hung Hong','$2a$10$rXsfbnHiP3ii.5dVBooEPO6o8lang3BI8.7BG6BG0WC0CMS4.nNCu','USER',true,'damhonghung123'),
+	 ('2b123456-8c90-4abc-9def-123456789abc'::uuid,NULL,NULL,NULL,NULL,'2025-02-11 21:10:00.131193','user1@gmail.com',true,'Trần Quang Tâm','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'user1'),
+	 ('3c234567-9d01-5bcd-0ef1-23456789abcd'::uuid,NULL,NULL,NULL,NULL,'2025-02-13 21:10:00.131193','user2@gmail.com',true,'Phạm Minh Tuệ','$2a$10$rXsfbnHiP3ii.5dVBooEPO6o8lang3BI8.7BG6BG0WC0CMS4.nNCu','USER',true,'user2'),
+	 ('4d345678-0e12-6cde-1f23-3456789abcde'::uuid,NULL,NULL,NULL,NULL,'2024-02-03 21:10:00.131193','user3@gmail.com',true,'Chu Thanh An','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'user3'),
+	 ('5e456789-1f23-7def-2345-456789abcdef'::uuid,NULL,NULL,NULL,NULL,'2025-01-13 21:10:00.131193','user4@gmail.com',true,'Doãn Chí Bình','$2a$10$rXsfbnHiP3ii.5dVBooEPO6o8lang3BI8.7BG6BG0WC0CMS4.nNCu','USER',true,'user4'),
+	 ('6f56789a-2345-8ef0-3456-56789abcdef0'::uuid,NULL,NULL,NULL,NULL,'2024-12-12 21:10:00.131193','user5@gmail.com',true,'Nguyễn Văn Tèo','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'user5'),
+	 ('6f56789a-2345-8ef0-3456-56789abcdef1'::uuid,NULL,NULL,NULL,NULL,'2025-01-08 21:10:00.131193','user6@gmail.com',true,'Maria Gonzalez','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'user6'),
+	 ('2b123456-8c90-4abc-9def-123456789ade'::uuid,NULL,NULL,NULL,NULL,'2025-02-15 21:10:00.131193','user11@gmail.com',true,'Nguyen Van Tuyen','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'vanan'),
+	 ('6f56789a-2345-8ef0-3456-56789abcdef5'::uuid,NULL,NULL,NULL,NULL,'2025-02-14 21:10:00.131193','user22@gmail.com',false,'John Smith','$2a$10$rXsfbnHiP3ii.5dVBooEPO6o8lang3BI8.7BG6BG0WC0CMS4.nNCu','USER',true,'johnsmith');
 INSERT INTO users (id,avatar_id,avatar_url,cover_id,cover_url,created_at,email,is_activated,name,password,role,status,username) VALUES
-	 ('4d345678-0e12-6cde-1f23-3456789abcdf'::uuid,NULL,NULL,NULL,NULL,NULL,'user33@gmail.com',false,'Alan Walkit','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'alanwalker'),
-	 ('5e456789-1f23-7def-2345-456789abcdf2'::uuid,NULL,NULL,NULL,NULL,NULL,'user44@gmail.com',false,'Joe Biden','$2a$10$rXsfbnHiP3ii.5dVBooEPO6o8lang3BI8.7BG6BG0WC0CMS4.nNCu','USER',true,'joebien'),
-	 ('6f56789a-2345-8ef0-3456-56789abcdef3'::uuid,NULL,NULL,NULL,NULL,NULL,'user55@gmail.com',false,'Helo Five','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'helofive');
+	 ('4d345678-0e12-6cde-1f23-3456789abcdf'::uuid,NULL,NULL,NULL,NULL,'2025-02-13 21:10:00.131193','user33@gmail.com',false,'Alan Walkit','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'alanwalker'),
+	 ('5e456789-1f23-7def-2345-456789abcdf2'::uuid,NULL,NULL,NULL,NULL,'2025-02-13 21:10:00.131193','user44@gmail.com',false,'Joe Biden','$2a$10$rXsfbnHiP3ii.5dVBooEPO6o8lang3BI8.7BG6BG0WC0CMS4.nNCu','USER',true,'joebien'),
+	 ('6f56789a-2345-8ef0-3456-56789abcdef3'::uuid,NULL,NULL,NULL,NULL,'2025-02-13 21:10:00.131193','user55@gmail.com',false,'Mirakuru Saitama','$2a$10$ymZXeAbuEnWLHvVRdxzNa.TT7ytNB9ZnxucgA4tb2QbLde7DdUoOm','USER',true,'helofive');
 
 
 INSERT INTO friends (friend_id,user_id,created_at) VALUES

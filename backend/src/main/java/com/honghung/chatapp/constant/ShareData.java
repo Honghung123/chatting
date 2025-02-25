@@ -22,6 +22,7 @@ public final class ShareData {
             "/app/**",
             "/topic/**",
             "/notification/**",
-            "/post/get-all"
+            "/post/get-all",
+            "/story/**"
             );
 }

@@ -10,7 +10,7 @@ import com.honghung.chatapp.entity.Notification;
 
 @Service
 public interface NotificationService {
-    void markAsRead(Long notificationId);
-    void deleteNotification(Long notificationId);
-    Page<Notification> getLatestNotifications(UUID userId, Integer page, Integer size);
+    void markAsRead(UUID notificationId);
+    void deleteNotification(UUID notificationId);
+    Page<Notification> getNotifications(UUID userId, Integer page, Integer size);
 }

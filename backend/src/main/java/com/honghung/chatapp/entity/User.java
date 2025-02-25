@@ -52,14 +52,14 @@ public class User implements Serializable{
     private LocalDateTime createdAt;
     
     // Non-owning side
-    @OneToOne(mappedBy = "sender", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore
-    private Notification notificationSender;
+    private List<Notification> notifications;
     
-    // Non-owning side
-    @OneToOne(mappedBy = "recipient", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Notification notificationRecipient;
+    // // Non-owning side
+    // @OneToOne(mappedBy = "recipient", fetch = FetchType.LAZY)
+    // @JsonIgnore
+    // private Notification notificationRecipient;
   
     // Non-owning side
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

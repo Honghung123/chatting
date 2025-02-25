@@ -1,6 +1,7 @@
 package com.honghung.chatapp.service.user; 
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -52,6 +53,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .password(hashedGeneratedPassword)
                 .role("USER")
                 .status(true)
+                .createdAt(LocalDateTime.now())
                 .build();
         return userRepository.save(newUser);
     }

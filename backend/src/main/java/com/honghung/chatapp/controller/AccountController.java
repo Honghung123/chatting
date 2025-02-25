@@ -24,26 +24,23 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/account")
 @RequiredArgsConstructor
 public class AccountController {
-    private final ConversationService conversationService;
-    private final RedisService redisService;
+    private final ConversationService conversationService; 
 
     @GetMapping("/conversations")
     public SuccessResponseEntity<List<ConversationResponse>> getUserConversations() {
         var user = (UserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         var friendList = conversationService.getUserConversations(user.getId());
-        if(user.getId() != null) {
-            redisService.setValue(RedisKey.USER_ONLINE_STATUS + ":" + user.getId().toString(), true);
-        }
         return SuccessResponseEntity.from(HttpStatus.OK, "Get user conversations successfully", friendList);
     }
    
     @GetMapping("/suggest-friends")
     public SuccessResponseEntity<PaginationData<UserInfoResponse>> getSuggestFriends(
         @RequestParam(defaultValue = "1") int page,
-        @RequestParam(defaultValue = "20") int size
+        @RequestParam(defaultValue = "20") int size,
+        @RequestParam(required = false, defaultValue = "newest") String sortBy
     ) {
         var user = (UserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        var friendList = conversationService.getSuggestFriends(user.getId(), page - 1, size);
+        var friendList = conversationService.getSuggestFriends(user.getId(), page - 1, size, sortBy);
         return SuccessResponseEntity.from(HttpStatus.OK, "Get suggest friends successfully", friendList);
     }
 }

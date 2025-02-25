@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -29,19 +30,16 @@ import lombok.Setter;
 public class Notification implements Serializable{
     private static final long serialVersionUID = 1L; 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String title;
     private String content;
     @Column(name = "is_read")
     private Boolean isRead;
-    @OneToOne()
-    @JoinColumn(name = "sender_id", referencedColumnName = "id")
-    private User sender;
-    @OneToOne()
-    @JoinColumn(name = "recipient_id", referencedColumnName = "id")
-    private User recipient;
-    @Column(name = "target_id")
+    @ManyToOne()
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+    private String type;
     private String targetId;
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;   

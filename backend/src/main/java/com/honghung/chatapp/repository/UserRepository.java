@@ -39,4 +39,14 @@ public interface UserRepository extends JpaRepository<User, UUID> {
             ) AND u.id <> :userId
             """)
     Page<User> getSuggestUserList(UUID userId, Pageable pageable);
+
+    @Query("""
+            SELECT u
+            FROM User u
+            JOIN Friend f ON ((f.id.userFriendId = u.id AND f.id.userId = :userId) 
+                            OR (f.id.userId = u.id AND f.id.userFriendId = :userId)
+            )
+            WHERE u.id <> :userId
+            """)
+    List<User> getFriendList(UUID userId);
 }

@@ -9,7 +9,8 @@ public enum AuthException implements ExceptionType {
     TOKEN_NOT_FOUND("token_not_found", "Token not found"),
     UNAUTHORIZED("unauthorized", "Unauthorized"),
     PASSWORD_NOT_MATCH("password_not_match", "Password not match"),
-    NOT_A_TOKEN("not_a_token", "Not a valid token"),
+    NOT_A_TOKEN("not_a_token", "Not a valid token"), 
+    INVALID_VERIFICATION_OTP("invalid_verification_otp", "Invalid verification OTP"),
     ;
 
     private final String code;

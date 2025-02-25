@@ -65,13 +65,14 @@ ADD COLUMN latest_message_id INTEGER REFERENCES chat_messages(id) ON DELETE CASC
 
 -- Notification schema
 CREATE TABLE notifications (
-    id SERIAL PRIMARY KEY,
-    sender_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    recipient_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    target_id VARCHAR(50) NOT NULL,
+    id UUID PRIMARY KEY,
     title VARCHAR(250) NOT NULL,
     content TEXT NOT NULL,
+    type VARCHAR(15) NOT NULL,
     is_read BOOLEAN DEFAULT FALSE,
+    -- sender_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES users(id) NOT NULL,
+    target_id VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

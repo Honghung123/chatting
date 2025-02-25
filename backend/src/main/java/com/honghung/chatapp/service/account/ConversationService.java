@@ -12,5 +12,5 @@ import com.honghung.chatapp.dto.response.user.UserInfoResponse;
 @Service
 public interface ConversationService {
     public List<ConversationResponse> getUserConversations(UUID userId);
-    public PaginationData<UserInfoResponse> getSuggestFriends(UUID id, int page, int size);
+    public PaginationData<UserInfoResponse> getSuggestFriends(UUID id, int page, int size, String sortBy);
 }

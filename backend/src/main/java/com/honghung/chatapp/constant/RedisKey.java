@@ -7,5 +7,6 @@ public final class RedisKey {
     public static final String BLACKLIST_REFRESH_TOKENS = "blacklist_refresh_tokens";
     public static final String USER_INFO = "user_info";
     public static final String USER_ONLINE_STATUS = "user_online_status";
+    public static final String VERIFICATION_OTP = "verification_otp";
 
 }

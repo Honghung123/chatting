@@ -34,8 +34,24 @@ public class KafkaProducerConfig {
         return new KafkaTemplate<>(producerFactory);
     }
 
+    // Declare topics for producers
     @Bean
     NewTopic confirmAccountLinkTopic() {
         return new NewTopic(KafkaTopic.SEND_CONFIRM_ACCOUNT_LINK_VIA_EMAIL, 3, (short) 1);
+    }
+
+    @Bean
+    NewTopic printAndWriteLogTopic() {
+        return new NewTopic(KafkaTopic.PRINT_AND_WRITE_LOG, 3, (short) 1);
+    }
+
+    @Bean
+    NewTopic updateUserOnlineStatusOnCache(){
+        return new NewTopic(KafkaTopic.UPDATE_USER_ONLINE_STATUS_ON_CACHE, 3, (short) 1);
+    }
+    
+    @Bean
+    NewTopic sendPostNotificationTopic(){
+        return new NewTopic(KafkaTopic.SEND_POST_NOTIFICATION_TO_USER, 3, (short) 1);
     }
 }

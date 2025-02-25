@@ -7,7 +7,8 @@ import com.honghung.chatapp.constant.AppProperties;
 import com.honghung.chatapp.dto.request.user.RenewTokenRequest;
 import com.honghung.chatapp.dto.request.user.UserLoginRequest;
 import com.honghung.chatapp.dto.request.user.UserLogoutRequest;
-import com.honghung.chatapp.dto.request.user.UserRegisterRequest; 
+import com.honghung.chatapp.dto.request.user.UserRegisterRequest;
+import com.honghung.chatapp.dto.request.user.VerificationCodeRequest;
 import com.honghung.chatapp.dto.response.SuccessResponseEntity;
 import com.honghung.chatapp.dto.response.user.UserLoginResponse;
 import com.honghung.chatapp.entity.User;
@@ -27,8 +28,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthController {
-    private final UserService userService;
+public class AuthController { 
     private final AuthService authService;
     // private final AppProperties appPropertiesConfig;
 
@@ -91,9 +91,9 @@ public class AuthController {
     //     return SuccessResponseEntity.from(HttpStatus.OK, "Verification Code was send to your email", userResetPasswordRequest.getEmail());
     // }
 
-    // @PostMapping("/verify-code")
-    // public SuccessResponseEntity<String> handleVerifyCode(@Valid @RequestBody VerificationCodeRequest verificationCodeRequest) {
-    //     userService.verifyCode(verificationCodeRequest);
-    //     return SuccessResponseEntity.from(HttpStatus.OK, "Reset password successfully", verificationCodeRequest.getEmail());
-    // }
+    @PostMapping("/verify-otp")
+    public SuccessResponseEntity<String> handleVerifyCode(@Valid @RequestBody VerificationCodeRequest verificationCodeRequest) {
+        authService.verifyCode(verificationCodeRequest);
+        return SuccessResponseEntity.from(HttpStatus.NO_CONTENT, "Verify email successfully");
+    }
 }

@@ -15,10 +15,13 @@ import com.honghung.chatapp.utils.JSONUtils;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,6 +51,12 @@ public class PostController {
     public SuccessResponseEntity<PostResponse> addNewPost(@RequestBody AddPostRequest request) {
         Post post = postService.addNewPost(request);
         return SuccessResponseEntity.from(HttpStatus.CREATED, "Add new post successfully", PostMapper.convertToPostResponse(post));
+    }
+    
+    @DeleteMapping("/{id}")
+    public SuccessResponseEntity<Void> deletePostRequest(@PathVariable UUID id) {
+        postService.deletePost(id);
+        return SuccessResponseEntity.from(HttpStatus.NO_CONTENT, "Deleted post successfully");
     }
     
 }

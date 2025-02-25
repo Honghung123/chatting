@@ -27,8 +27,9 @@ public class JSONUtils {
             throw new RuntimeException(e);
         }
     }
-
+    
     public static String convertToJSON(Object object) {
+        objectMapper.findAndRegisterModules();
         try {
             return objectMapper.writeValueAsString(object);
         } catch (Exception e) {

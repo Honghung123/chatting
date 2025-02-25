@@ -21,6 +21,7 @@ import com.honghung.chatapp.dto.request.user.RenewTokenRequest;
 import com.honghung.chatapp.dto.request.user.UserLoginRequest;
 import com.honghung.chatapp.dto.request.user.UserLogoutRequest;
 import com.honghung.chatapp.dto.request.user.UserRegisterRequest;
+import com.honghung.chatapp.dto.request.user.VerificationCodeRequest;
 import com.honghung.chatapp.entity.User;
 import com.honghung.chatapp.mapper.UserMapper;
 import com.honghung.chatapp.model.AuthenticatedToken;
@@ -161,5 +162,19 @@ public class AuthServiceImpl implements AuthService {
                 .accessToken(newAccessToken)
                 .refreshToken(newRefreshToken)
                 .build();
+    }
+
+    @Override
+    public void verifyCode(VerificationCodeRequest verificationCodeRequest) {
+        String storedKey = RedisKey.VERIFICATION_OTP + ":" + verificationCodeRequest.email();
+        String storedCode = (String)redisService.getValue(storedKey);
+        if (storedCode == null) {
+            throw BusinessException.from(AuthException.INVALID_VERIFICATION_OTP, "Invalid verification code");
+        }
+        if (!storedCode.equals(verificationCodeRequest.otpCode())) {
+            throw BusinessException.from(AuthException.INVALID_VERIFICATION_OTP, "Invalid verification code");
+        } 
+        userService.verifyUserEmail(verificationCodeRequest.email(), true);
+        redisService.deleteKey(storedKey);
     }
 }

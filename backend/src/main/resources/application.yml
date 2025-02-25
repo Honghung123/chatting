@@ -2,10 +2,10 @@ spring:
   application:
     name: chatapp
   datasource:
-    url: ${POSTGREDB_URL:jdbc:postgresql://localhost:5432}/${POSTGREDB_NAME:chatting}
-    driverClassName: ${POSTGREDB_DRIVER_CLASS_NAME:org.postgresql.Driver}
-    username: ${POSTGREDB_USER:postgres}
-    password: ${POSTGREDB_PASSWORD:postgres}
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/chatting_db}
+    driverClassName: ${DB_DRIVER_CLASS_NAME:org.postgresql.Driver}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
   jpa:
     # show-sql: true
     hibernate:
@@ -17,7 +17,12 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
   kafka:
-    bootstrap-servers: localhost:29092
+    bootstrap-servers: ${KAFKA_URL:localhost:29092}
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_DEFAULT_USER:guest}
+    password: ${RABBITMQ_DEFAULT_PASS:guest}
   sql:
     init:
       mode: always
@@ -25,7 +30,7 @@ spring:
   data:
     redis:
       host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:6380}
+      port: ${REDIS_CONTAINER_PORT:6379}
   cache:
     cache-names:
     - notifications
@@ -86,13 +91,31 @@ spring:
         # provider:
         #   oauth2-client:
         #     issuer-uri: http://localhost:8180/realms/oauth2-demo-realm
+  
   profile:
     active: default
+  output:
+    ansi:
+      enabled: always
+
+logging:
+  pattern:
+    console: '%clr(%d{yyyy-MM-dd HH:mm}){faint} %clr(<%p>){aqua} %clr(%-40.40logger{1}){cyan} %clr(:){faint} %m%n'
+  level:
+    root: info
+    org:
+      springframework:
+        web: info
+    com:
+      honghung:
+        chatapp: error
+  file:
+    name: logs/chatting.log
 
 app.properties:
   cors:
     pathPattern: /**
-    allowedOrigins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000, http://localhost:3001, http://localhost:8080}
+    allowedOrigins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000, http://localhost:8080}
     allowCredentials: true
     allowedMethods: GET, POST, PUT, PATCH, DELETE, OPTIONS
     allowedHeaders: Authorization, Origin, Content-Type, Accept, Accept-Encoding, Accept-Language, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Access-Control-Request-Method, X-Requested-With, X-Auth-Token, X-Xsrf-Token, Cache-Control, Id-Token
