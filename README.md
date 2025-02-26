@@ -1,11 +1,8 @@
 # Social Chat Application
 
-A **real-time social chat application** inspired by Facebook, built with **Spring Boot** (backend) and **Next.js** (frontend). The application provides real-time messaging, user authentication, notifications, file uploads, and more.
-
----
-
 ## 🚀 Overview
 
+A **real-time social chat application** inspired by Facebook, built with **Spring Boot** (backend) and **Next.js** (frontend). The application provides real-time messaging, user authentication, notifications, file uploads, and more.
 This project enables users to **chat in real-time**, **manage authentication**, and **receive notifications asynchronously** using **Kafka**. It leverages **Spring Security** for authentication, **Redis for caching**, and **Cloudinary for file storage**. The frontend is built using **Next.js, TailwindCSS, and Shadcn**, ensuring a modern and responsive UI.
 
 ### 🔑 Key Features:
@@ -50,24 +47,42 @@ This project enables users to **chat in real-time**, **manage authentication**, 
 ```
 social-chat-app/
 │── backend/                # Spring Boot backend
-│   ├── src/main/java/com/example/chat/
+│   ├── src/main/java/com/honghung/chatapp/
+│   │   ├── component/      # Custom components
 │   │   ├── config/         # Security, JWT, WebSocket configurations
+│   │   ├── constant/       # Constants for configuration and global variables
 │   │   ├── controller/     # REST APIs
+│   │   ├── dto/     # Data Transfer Objects for requests and responses
 │   │   ├── service/        # Business logic
-│   │   ├── model/          # Database entities
+│   │   ├── entity/         # Database entities
+│   │   ├── model/          # DTO for transfering among internal services
 │   │   ├── repository/     # Database access
 │   │   ├── utils/          # Utility classes
 │   ├── resources/          # Configuration files (application.yml)
+│   ├── .env             # Environment variables for docker compose
 │   ├── pom.xml             # Maven dependencies
+│   │
 │── frontend/               # Next.js frontend
-│   ├── components/         # UI components
-│   ├── pages/              # Next.js pages
-│   ├── store/              # Redux store
-│   ├── services/           # API calls (Axios)
-│   ├── styles/             # TailwindCSS configuration
-│   ├── package.json        # Frontend dependencies
-│── docker-compose.yml      # Docker configuration
-│── README.md               # Documentation
+│   │
+│   ├── public/                  # Static assets like images, fonts, etc.
+│   ├── src/
+│   |   ├── apis/                # Call request API (e.g., axios services)
+│   │   ├── app/                 # Main application components
+│   │   ├    ├── (auth)/         # Authentication pages
+│   │   ├    ├── (mainlayout)/   # Components for homepage
+│   │   ├    └── (chat)/         # Chat page UI
+│   │   ├── components/          # Reusable components including Shadcn, Custom components
+│   │   ├── assets/              # Static assets like images, fonts, etc.
+│   │   ├── hooks/               # Custom React hooks
+│   │   ├── utils/               # Utility functions
+│   │   ├── lib/                 # Utility libraries (leaflet for maps, react-query for data fetching, redux-toolkit for state management, ...)
+│   |   └── schema/              # Type definitions, validation schemas, etc.
+│   ├── .env.local               # Environment variables
+│   ├── tailwind.config.js       # TailwindCSS configuration
+│   ├── next.config.js           # Next.js configuration
+│   ├── package.json             # Project dependencies and scripts
+│   └── tsconfig.json            # TypeScript configuration
+│── README.md                    # Documentation
 ```
 
 ---
@@ -81,84 +96,131 @@ social-chat-app/
 -   **Docker**
 -   **PostgreSQL & Redis**
 -   **Kafka & Zookeeper**
+-   **Cloudinary account**
 
 ---
 
 ### 2️⃣ Backend Setup
 
-#### Clone the repository:
+#### 1. Clone the repository:
 
 ```sh
-git clone https://github.com/your-repo/social-chat-app.git
-cd social-chat-app/backend
+git clone <THIS REPOSITORY URL>
 ```
 
-#### Configure `application.properties`:
+#### 2. Configure config in `.env`:
+
+You need to override some configs as follows:
 
 ```properties
-# Database
-spring.datasource.url=jdbc:postgresql://localhost:5432/social_chat_db
-spring.datasource.username=your_db_user
-spring.datasource.password=your_db_password
+# Postgres
+DB_USER=YOUR_POSTGRES_USER
+DB_PASSWORD=YOUR_POSTGRES_PASSWORD
+DB_NAME=YOUR_POSTGRES_DB_NAME
+DB_DRIVER_CLASS_NAME=org.postgresql.Driver
 
-# Redis
-spring.redis.host=localhost
-spring.redis.port=6379
+# Rabbit MQ
+RABBITMQ_DEFAULT_USER=YOUR_RABBITMQ_USER
+RABBITMQ_DEFAULT_PASS=YOUR_RABBITMQ_PASSWORD
 
-# Email Service
-spring.mail.host=smtp.gmail.com
-spring.mail.port=587
-spring.mail.username=your_email@gmail.com
-spring.mail.password=your_email_password
+# Mail Sender
+MAIL_FROM=YOUR_EMAIL
+MAIL_USERNAME=YOUR_EMAIL or YOUR_USERNAME
+MAIL_PASSWORD=YOUR_PASSWORD
 
-# Cloudinary API
-cloudinary.cloud-name=your_cloud_name
-cloudinary.api-key=your_api_key
-cloudinary.api-secret=your_api_secret
+# Cloudinary
+CLOUDINARY_API_KEY=YOUR_CLOUDINARY_API_KEY
+CLOUDINARY_URL=YOUR_CLOUDINARY_URL
 ```
 
-#### Build and run the backend:
+-> Others can be omitted
+
+#### 3. Build and run the backend:
+
+You can run the backend server using Maven:
 
 ```sh
 mvn clean install
 mvn spring-boot:run
 ```
 
+Or run with Docker compose:
+
+```sh
+docker-compose up -d
+```
+
 ---
 
 ### 3️⃣ Frontend Setup
 
-#### Navigate to the frontend directory:
+#### 1. Navigate to the frontend directory:
 
 ```sh
 cd ../frontend
 ```
 
-#### Install dependencies:
+#### 2. Install dependencies:
 
 ```sh
 npm install
 ```
 
-#### Start the frontend server:
+#### 3. Environment Configuration
+
+Create a `.env.local` file in the `frontend/` directory and add the following environment variables:
+
+```env
+    NEXT_PUBLIC_BASE_URL=http://localhost:6000
+```
+
+Replace values with your actual backend API URL
+
+#### 4. Run the Development Server
+
+Start the frontend server:
 
 ```sh
 npm run dev
 ```
 
----
+The application should now be running at **`http://localhost:3000`**.
 
-### 4️⃣ Run with Docker
+#### 5. Build for Production
 
-To run the backend and required services using Docker:
+To create an optimized production build:
 
 ```sh
-docker-compose up --build
+npm run build
 ```
 
-Ensure `docker-compose.yml` is properly configured for PostgreSQL, Redis, and Kafka.
+To preview the production build:
 
----
+```sh
+npm run start
+```
+
+#### 6. Run with Docker
+
+You can also containerize the frontend using Docker. First, create a `Dockerfile`:
+
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package.json package.lock ./
+RUN npm install
+COPY . .
+RUN npm run build
+CMD ["npm", "run", "start"]
+EXPOSE 3000
+```
+
+Then, build and run the Docker container:
+
+```sh
+docker build -t social-chat-frontend .
+docker run -p 3000:3000 social-chat-frontend
+```
 
 ## 🤝 Contributing
 

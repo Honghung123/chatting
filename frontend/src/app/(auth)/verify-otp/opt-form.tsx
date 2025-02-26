@@ -15,10 +15,10 @@ import { useRouter } from "next/navigation";
 import { SuccessResponseType } from "@/schema/types/common";
 import ErrorPage from "@/app/error";
 
-export default function InputOTPForm() {
+export default function InputOTPForm({ email }: { email: string }) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const email: string = sessionStorage.getItem("emailRegistered") as string;
+
     const optForm = useForm<SendOTPRequestDTO>({
         resolver: zodResolver(OTPSchema),
         defaultValues: {

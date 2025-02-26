@@ -9,7 +9,7 @@ export default function OTPVerifyPage() {
     const [email, setEmail] = useState("");
     const router = useRouter();
     useEffect(() => {
-        const emailSaved = localStorage.getItem("emailRegistered");
+        const emailSaved: string = sessionStorage.getItem("emailRegistered") as string;
         if (!emailSaved) {
             toast({
                 title: "Error",

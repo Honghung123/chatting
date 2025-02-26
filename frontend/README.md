@@ -1,138 +1,47 @@
-# Next.js Project
+# 🖥️ Social Chat Application
 
-This is a **Next.js** project built with modern tools and libraries to create a fast, scalable, and maintainable application for the Admin and Counterpart website of Vousphere.
-
-## Table of Contents
-
--   [Features](#features)
--   [Technologies Used](#technologies-used)
--   [Getting Started](#getting-started)
--   [Project Structure](#project-structure)
--   [Contributing](#contributing)
--   [License](#license)
+This is the **frontend** of the Social Chat Application, built using **Next.js, TypeScript, TailwindCSS**, and **Shadcn**. It provides a modern and responsive **real-time chat** interface, user authentication, and seamless integration with the backend.
 
 ---
 
-## Features
+## 🚀 Overview
 
--   **Next.js 15**: The latest Next.js version for server-side rendering and static site generation.
--   **React 19**: Modern React features like hooks and concurrent rendering.
--   **TailwindCSS**: Utility-first CSS framework for rapid UI development.
--   **React Query**: Powerful state management and data-fetching utilities.
--   **Redux Toolkit**: Simplified state management for complex applications.
--   **Form Management**: Easy-to-use form validation with `react-hook-form` and `zod`.
--   **Rich Text Editing**: Integrated WYSIWYG editor using `react-froala-wysiwyg`.
--   **Data Visualization**: Charts and graphs powered by `recharts` and `react-apexcharts`.
--   **Map Integration**: Interactive maps with `react-leaflet` and `leaflet`.
--   **Radix UI**: Accessible and customizable UI components.
--   **Dark Mode Support**: Built-in dark mode support with `next-themes`.
+This frontend application serves as the user interface for the **real-time chat system**, inspired by Facebook Messenger. It enables users to **sign up, log in, send real-time messages**, and **receive notifications asynchronously**.
 
----
+### 🔑 Key Features:
 
-## Technologies Used
-
-### Core Dependencies
-
--   **Next.js**: `15.1.0`
--   **React**: `19.0.0`
--   **TailwindCSS**: `3.4.1`
--   **TypeScript**: `5.x`
-
-### State Management
-
--   **@reduxjs/toolkit**: `^2.5.0`
--   **redux-persist**: `^6.0.0`
--   **@tanstack/react-query**: `^5.61.0`
-
-### Form Handling
-
--   **react-hook-form**: `^7.54.0`
--   **@hookform/resolvers**: `^3.9.1`
--   **zod**: `^3.24.1`
-
-### UI Components
-
--   **@radix-ui/react-dialog**
--   **@radix-ui/react-dropdown-menu**
--   **lucide-react**: Icon library
--   **tailwindcss-animate**: Animations for TailwindCSS
--   **vaul**: Elegant UI animations
-
-### Data Visualization
-
--   **recharts**
--   **react-apexcharts**
-
-### Date & Time
-
--   **date-fns**
-
-### Maps
-
--   **react-leaflet**
--   **leaflet**
--   **leaflet-defaulticon-compatibility**
-
-### Utilities
-
--   **clsx**: Utility for conditional classNames
--   **class-variance-authority**: Utility for handling Tailwind class variants
--   **axios**: HTTP client library
--   **next-themes**: Theme management for Next.js
+-   **User Authentication:** OAuth2, username/password, JWT-based session management.
+-   **Real-time Messaging:** WebSocket integration for instant updates.
+-   **State Management:** Redux Toolkit for global state management.
+-   **Efficient Data Fetching:** TanStack Query for optimized API requests.
+-   **Appealing Design:** TailwindCSS & Shadcn for a clean and intuitive UI.
+-   **File Uploads:** Cloudinary integration for seamless media uploads.
 
 ---
 
-## Getting Started
+## 🛠 Technologies Used
 
-### Prerequisites
+-   **Next.js** - React framework for server-side rendering (SSR) and static site generation (SSG).
+-   **TypeScript** - Strongly typed JavaScript for better maintainability.
+-   **TailwindCSS** - Utility-first CSS framework for rapid UI development.
+-   **Shadcn** - Modern UI components for a beautiful and accessible design.
+-   **Redux Toolkit** - State management solution for handling global state.
+-   **TanStack Query** - Efficient and performant data fetching.
+-   **Axios** - API client for making HTTP requests.
 
-Ensure you have the following installed on your machine:
+---
 
--   **Node.js**: `>= 18.x`
--   **npm**: `>= 9.x` or **yarn**
+## 📂 Project Structure
 
-### Installation
-
-1. Clone the repository:
-
-    ```bash
-    git clone https://github.com/tmplam/vousphere.git
-    ```
-
-2. Install dependencies:
-
-    ```bash
-    npm install
-    ```
-
-3. Set up environment variables:
-
-    Create a `.env.local` file in the root of your project and add the necessary environment variables. For example:
-
-    ```env
-    NEXT_PUBLIC_BASE_URL=http://localhost:6000
-    ```
-
-### Run the Development Server
-
-    ```bash
-    npm run dev
-    ```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
-
-## Project Structure
-
-Here's a brief overview of the project structure:
-
-```plaintext
+```
 .
 ├── public/                  # Static assets like images, fonts, etc.
 ├── src/
 |   ├── apis/                # Call request API (e.g., axios services)
 │   ├── app/                 # Main application components
 │   ├    ├── (auth)/         # Authentication pages
-│   ├    └── (subsystem)/    # Management pages for Admin and Counterpart
+│   ├    ├── (mainlayout)/         # Components for homepage
+│   ├    └── (chat)/    # Chat page UI
 │   ├── components/          # Reusable components including Shadcn, Custom components
 │   ├── assets/              # Static assets like images, fonts, etc.
 │   ├── hooks/               # Custom React hooks
@@ -148,18 +57,104 @@ Here's a brief overview of the project structure:
 
 ---
 
-## Contributing
+## 🏗️ Setup Instructions
 
-Contributions are welcome! If you'd like to contribute:
+### 1️⃣ Prerequisites
 
-1. Fork the repository.
-2. Create a new feature branch (`git checkout -b feature/your-feature`).
-3. Commit your changes (`git commit -m 'Add some feature'`).
-4. Push the branch (`git push origin feature/your-feature`).
-5. Open a pull request.
+-   **Node.js 18+**
+-   **Npm**
+-   **Backend API** running on `http://localhost:8080` (or your configured backend URL)
 
 ---
 
-## License
+### 2️⃣ Install Dependencies
 
-This project is licensed under the [MIT License](LICENSE).
+Clone the repository and navigate to the frontend directory:
+
+```sh
+git clone <git repository URL>
+```
+
+Then, install dependencies:
+
+```sh
+npm install
+```
+
+---
+
+### 3️⃣ Environment Configuration
+
+Create a `.env.local` file in the `frontend/` directory and add the following environment variables:
+
+````env
+    NEXT_PUBLIC_BASE_URL=http://localhost:6000
+    ```
+
+Replace values with your actual backend API URL
+
+---
+
+### 4️⃣ Run the Development Server
+
+Start the frontend server:
+
+```sh
+npm run dev
+````
+
+The application should now be running at **`http://localhost:3000`**.
+
+---
+
+### 5️⃣ Build for Production
+
+To create an optimized production build:
+
+```sh
+npm run build
+```
+
+To preview the production build:
+
+```sh
+npm run start
+```
+
+---
+
+### 6️⃣ Run with Docker
+
+You can also containerize the frontend using Docker. First, create a `Dockerfile`:
+
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package.json package.lock ./
+RUN npm install
+COPY . .
+RUN npm run build
+CMD ["npm", "run", "start"]
+EXPOSE 3000
+```
+
+Then, build and run the Docker container:
+
+```sh
+docker build -t social-chat-frontend .
+docker run -p 3000:3000 social-chat-frontend
+```
+
+---
+
+## 🎨 UI & Screenshots
+
+> _(Add screenshots or GIFs showcasing the UI here.)_
+
+---
+
+## 📌 Notes & Future Improvements
+
+-   Add **dark mode** support with TailwindCSS.
+-   Improve **WebSocket reconnection** in case of connection loss.
+-   Implement **progressive web app (PWA)** features for better mobile experience.
