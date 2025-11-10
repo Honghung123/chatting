@@ -171,7 +171,7 @@ npm install
 Create a `.env.local` file in the `frontend/` directory and add the following environment variables:
 
 ```env
-    NEXT_PUBLIC_BASE_URL=http://localhost:6000
+NEXT_PUBLIC_BASE_URL=http://localhost:6000
 ```
 
 Replace values with your actual backend API URL
@@ -221,11 +221,4 @@ Then, build and run the Docker container:
 docker build -t social-chat-frontend .
 docker run -p 3000:3000 social-chat-frontend
 ```
-
-## 🤝 Contributing
-
-1. Fork the repository.
-2. Create a new feature branch (`git checkout -b feature-name`).
-3. Commit your changes (`git commit -m "Add new feature"`).
-4. Push to the branch (`git push origin feature-name`).
-5. Open a Pull Request.
+ 
